@@ -1,0 +1,331 @@
+{
+    "Laszewo Floor" : {
+      "class_":"normal",
+      "number":3,
+      "rooms":{
+        "Elevator Hall":{
+          "description":"You enter the elevator hallway.",
+          "entrances":{
+            "east":"Elevator",
+            "west":"Main Hall"
+          },
+          "exits":{
+            "west":"Elevator",
+            "east":"Main Hall"
+          }
+        },
+
+        "Main Hall":{
+            "description":"You're in a beautiful gallery, laid out like a museum. Paintings are hung on either wall, each with their own title, and an emblem on the ground in front of you. Across the room is a circle perfectly carved into the marble wall.",
+            "entrances":{
+              "east":"Elevator Hall"
+            },
+            "exits":{
+                "west":"Elevator Hall"
+            },
+            "features":{
+              "Gold Sculpture":{
+                "description":"The painting depicts a sculpture made to look like a person's head. It is made of dark stone, and the top half has been broken off. The exposed interior is a bright yellow color. Gold liquid drips from the person's lips.",
+                "actions":[
+                    "inspect"
+                ]
+              },
+              "Monoliths":{
+                "description":"Two marble monoliths rise from a fog of pink and blue. On each one a figure can be seen, staring at the other.",
+                "actions":[
+                    "inspect"
+                ]
+              },
+              "Desert Sun":{
+                "description":"A glowing red sun sits on a hill of black sand, illuminating it. Three figures can be seen walking towards it.",
+                "actions":[
+                    "inspect"
+                ]
+              },
+              "Trinity Lake":{
+                "description":"A lake surrounded by great mountains can be seen extending to the horizon. Three lights, two pink and one blue, illuminate the night and reflect off of the surface of the water. Three figures appear to be walking across the lake's surface towards the lights.",
+                "actions":[
+                    "inspect"
+                ]
+              },
+              "Emblem":{
+                "description":"An emblem of a triangle in two segments with a line perpindicularly cutting through one edge is emblazoned on the floor.",
+                "actions":[
+                    "inspect"
+                ]
+              },
+              "hiddenroomswitch":{
+                "description":"",
+                "hidden actions":[
+                    "open laszewo room"
+                ]
+              }
+            }
+          },
+
+
+          "Laszewo Room":{
+            "description":"You enter the passageway in the wall and find yourself in a hidden room. A small table holds a record player, note, and a picture.",
+            "entrances":{
+              "east":"Main Hall"
+            },
+            "exits":{
+              "west":"Main Hall"
+            },
+            "features":{
+                "Picture":{
+                  "description":"It's a little blurry, but it appears to be from a music show. The triangle emblem is displayed on a bright screen, and everyone seems to be having a good time.",
+                  "actions":[
+                      "inspect"
+                  ]
+                },
+                "Record Player":{
+                    "description":"There's a record ready to be played. Maybe you should give it a listen.",
+                    "actions":[
+                        "inspect"
+                    ],
+                    "hidden actions":[
+                        "listen to music"
+                    ]
+                }
+              }
+          }
+      }
+    },
+    "First Floor and Lobby" : {
+      "class_":"normal",
+      "number":1,
+      "rooms":{
+
+        "Main Hall":{
+          "description":"You're in a small hallway. There's a bunch of numbered hotel rooms, and at one end there is a large lobby with a handful of ammenities. At the other end, a mysterious elevator with a sign next to it. The sign has some instructions about the elevator, and there's a dial above the elevator to indicate what floor the elevator is on. On one end of the dial has a 0, the other has a ∞.",
+          "entrances":{
+            "west":"Lobby",
+            "east" : "Elevator",
+            "out room 1":"Room 1",
+            "out room 2":"Room 2",
+            "out room 3":"Room 3",
+            "out room 4":"Room 4",
+            "out room 5":"Room 5",
+            "out room 6":"Room 6"
+          },
+          "exits":{
+            "to room 1":"Room 1",
+            "to room 2":"Room 2",
+            "to room 3":"Room 3",
+            "to room 4":"Room 4",
+            "to room 5":"Room 5",
+            "to room 6":"Room 6",
+            "west" : "Elevator",
+            "east":"Lobby"
+          }
+        },
+
+        "Room 1":{
+          "description":"It's a hotel room furnished with a bed, nightstand, and lamp. Funny, there's no windows...",
+          "entrances":{
+            "to room 1":"Main Hall"
+          },
+          "exits":{
+            "out room 1":"Main Hall"
+          }
+        },
+
+        "Room 2":{
+          "description":"It's a hotel room furnished with a bed, nightstand, and lamp. Funny, there's no windows...",
+          "entrances":{
+            "to room 2":"Main Hall"
+          },
+          "exits":{
+            "out room 2":"Main Hall"
+          }
+        },
+
+        "Room 3":{
+          "description":"It's a hotel room furnished with a bed, nightstand, and lamp. Funny, there's no windows...",
+          "entrances":{
+            "to room 3":"Main Hall"
+          },
+          "exits":{
+            "out room 3":"Main Hall"
+          }
+        },
+
+        "Room 4":{
+          "description":"It's a hotel room furnished with a bed, nightstand, and lamp. Funny, there's no windows...",
+          "entrances":{
+            "to room 4":"Main Hall"
+          },
+          "exits":{
+            "out room 4":"Main Hall"
+          }
+        },
+
+        "Room 5":{
+          "description":"It's a hotel room furnished with a bed, nightstand, and lamp. Funny, there's no windows...",
+          "entrances":{
+            "to room 5":"Main Hall"
+          },
+          "exits":{
+            "out room 5":"Main Hall"
+          }
+        },
+        "Room 6":{
+          "description":"It's a hotel room furnished with a bed, nightstand, and lamp. Funny, there's no windows...",
+          "entrances":{
+            "to room 6":"Main Hall"
+          },
+          "exits":{
+            "out room 6":"Main Hall"
+          }
+        },
+
+        "Lobby":{
+          "description":"in lobby now",
+          "entrances":{
+            "east":"Main Hall"
+          },
+          "exits":{
+            "west":"Main Hall"
+          },
+          "features":{
+            "Guide 1":{
+              "description":"You pull the book \"Guide 1\" off the shelf. It reads: \n\"Welcome to the Infinite Hotel! Here are some books to help give you some idea of how to navigate the hotel. Everyone participating will be able to interact with each other, and any changes you make to the environment will be visible to other people. Feel free to explore as much as you want, and check out the other guides! [contact me if you have any questions you can't figure out]\"\nYou put the book back on the shelf.",
+              "actions":[
+                  "inspect"
+              ]
+            },
+            "Guide 2":{
+              "description":"You pull the book \"Guide 2\" off the shelf. It reads: \n\"The first thing to learn is how to provide input. You will receive messages containing all the actions you can do. Each action is indicated by a \">\" followed by a word in all caps. If you want to do that action, type the capitalized part of the message. For example, if you were given the option \"> PRESS the button\" you would need to only type \"press\" to do that action (don't worry about capitalization in the messages you send). Some actions have to be given in a specific manner, which is covered in book 3\"\nYou put the book back on the shelf.",
+              "actions":[
+                  "inspect"
+              ]
+            },
+            "Guide 3":{
+              "description":"You pull the book \"Guide 3\" off the shelf. It reads: \n\"Some actions need some additional info to be performed. For example, \"USE\" lets you use an item you have. But you also need to specify which item! If given the option \"> USE Shovel, Flashlight, Ty's Note, Match\" you would respond with \"use ty's note\" to use that item. Notice upper or lower case doesn't matter, but otherwise the name must match exactly. \"SPEAK\" is a unique action that requires you to enter what you will say, for example \"speak very cool\" would make your character say \"very cool\" out loud. If you use SPEAK, other people in the room will hear whatever you say (maybe you should say hi?)\"\nYou put the book back on the shelf.",
+              "actions":[
+                  "inspect"
+              ]
+            },
+            "Guide 4":{
+              "description":"You pull the book \"Guide 4\" off the shelf. It reads: \n\"Not all actions have an effect in every room. Try experimenting with where you do certain actions to see if something new happens. There are also a few hidden actions that can be revealed as you explore. If you mistype an action or the additional info, it will prompt you to try again\"\nYou put the book back on the shelf.",
+              "actions":[
+                  "inspect"
+              ]
+            },
+            "Guide 5":{
+              "description":"You pull the book \"Guide 5\" off the shelf. It reads: \n\"The GO action: GO is important because it allows you to move. The options GO lets you pick are usually compass directions to help give you an idea of how the space is laid out. Sometimes you may encounter a passage way that is locked or otherwise blocked\"\nYou put the book back on the shelf.",
+              "actions":[
+                  "inspect"
+              ]
+            },
+            "Guide 6":{
+              "description":"You pull the book \"Guide 6\" off the shelf. It reads: \n\"Items: items can be found in the hotel. You can DROP, PICKUP, or USE items. If you DROP an item, it will remain in that room and other players can find it and pick it up. You can PICKUP items left by other players or found in the hotel. While all items can be used with USE, some items have no functionality and are mean to be moved to another room or are decorative\"\nYou put the book back on the shelf.",
+              "actions":[
+                  "inspect"
+              ]
+            },
+            "Guide 7":{
+              "description":"You pull the book \"Guide 7\" off the shelf. It reads: \n\"The Infinite Elevator: the elevator in the hotel is, well, infinite and allows you to travel to any possible number floor. It's a magic elevator (duh) so once you are in the elevator, you only need to speak what floor you want to go to, for example \"speak 6\" would take you to floor 6 [hint: don't go to floor 6]. You're currently on the main floor (1). If you wait too long in the elevator, it will kick you out. If someone else is using the elevator, you won't be able to use it, so wait 10 seconds or so and try again\"\nYou put the book back on the shelf.",
+              "actions":[
+                  "inspect"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Mirror Room":{
+      "class_":"normal",
+      "number":2,
+      "rooms":{
+
+        "Main Room":{
+          "description":"You're in a large room with a high ceiling. You notice an old TV, oil painting, and a blackboard covered in an arrangement of bizarre marks and symbols. The far wall of the room is a mirror and makes the room look twice as big. Something seems to be off about the reflection...",
+          "entrances":{
+            "east":"Elevator Hall"
+          },
+          "exits":{
+            "west":"Elevator Hall"
+          },
+          "features":{
+            
+            "Oil Painting":{
+              "description":"An oil painting of yellow, red, and black decorates the wall behind you. In the reflection, you notice the design and texture indicate it's a watercolor painting. Both paintings radiate a tense aura.",
+              "actions":[
+                  "inspect"
+              ]
+            },
+            "Blackboard":{
+              "description":"You flip the blackboard around in its frame and look in the mirror. In the reflection, there are no stray marks, and a message is written in clear, plain text: \"[hint fix this later]\". When you flip the blackboard back around, you notice the symbols are still there.",
+              "actions":[
+                  "inspect"
+              ]
+            },
+            "Mirror":{
+              "description":"You walk closer to the mirror and look your reflection in the eyes. As you lock gaze, you watch as they blink...",
+              "actions":[
+                "inspect"
+              ]
+            },
+            "TV":{
+              "description":"You walk over to the TV and turn it on. Interestingly, the TV in the reflection is playing a different channel. After a few seconds, the TV flashes and shuts off.",
+              "actions":[
+                  "inspect"
+              ]
+            }
+          }
+        },
+
+        "Elevator Hall":{
+          "description":"You enter the elevator hallway.",
+          "entrances":{
+            "east":"Elevator",
+            "west":"Main Room"
+          },
+          "exits":{
+            "west":"Elevator",
+            "east":"Main Room"
+          }
+        }
+      }
+    },
+    "Prank Room":{
+      "class_":"normal",
+      "number":6,
+      "rooms":{
+
+        "Main Room":{
+          "description":"You walk into a small courtyard. There's a bench, a small path, and a tiny pond. In front of the pond is a small stone with the text \"FLIP ME OVER\" on it.",
+          "entrances":{
+            "east":"Elevator Hall"
+          },
+          "exits":{
+            "west":"Elevator Hall"
+          },
+          "features":{
+            
+            "Rock":{
+              "description":"You flip over the rock... on the back is written \"YOU JUST TOOK ORDERS FROM A ROCK! ARE YOU STONED?\". Guess whoever left it here got you pretty good.",
+              "actions":[
+                  "inspect"
+              ]
+            }
+          }
+        },
+
+        "Elevator Hall":{
+          "description":"You enter the elevator hallway.",
+          "entrances":{
+            "east":"Elevator",
+            "west":"Main Room"
+          },
+          "exits":{
+            "west":"Elevator",
+            "east":"Main Room"
+          }
+        }
+      }
+    }
+}
+  
