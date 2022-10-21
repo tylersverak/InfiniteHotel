@@ -2,6 +2,9 @@ from re import I
 from action import Action
 
 class Item:
+
+    def __repr__(self):
+            return "item:" + self.name
     
     def __init__(self, item_dump, name, owner = None) -> None:
         self.name = name

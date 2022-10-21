@@ -49,7 +49,7 @@
                 ]
               },
               "Emblem":{
-                "description":"An emblem of a triangle in two segments with a line perpindicularly cutting through one edge is emblazoned on the floor.",
+                "description":"An emblem of a triangle in two segments with a line perpindicularly cutting through one edge is emblazoned on the floor. Text around it reads \"Say our name - We don't know how to pronounce it either\".",
                 "actions":[
                     "inspect"
                 ]
@@ -220,7 +220,7 @@
               ]
             },
             "Guide 6":{
-              "description":"You pull the book \"Guide 6\" off the shelf. It reads: \n\"Items: items can be found in the hotel. You can DROP, PICKUP, or USE items. If you DROP an item, it will remain in that room and other players can find it and pick it up. You can PICKUP items left by other players or found in the hotel. While all items can be used with USE, some items have no functionality and are mean to be moved to another room or are decorative\"\nYou put the book back on the shelf.",
+              "description":"You pull the book \"Guide 6\" off the shelf. It reads: \n\"Items: items can be found in the hotel. You can DROP, PICKUP, or USE items. If you DROP an item, it will remain in that room and other players can find it and pick it up. You can PICKUP items left by other players or found in the hotel (if you are given the option of picking up an item and are told the item doesn't seem to be there, it usually someone grabbed it after you entered the room but before you tried to pick it up). While all items can be used with USE, some items have no functionality and are mean to be moved to another room or are decorative\"\nYou put the book back on the shelf.",
               "actions":[
                   "inspect"
               ]

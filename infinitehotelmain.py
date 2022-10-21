@@ -10,6 +10,7 @@ received_texts = []
 RUNNNING = False
 STARTING_FLOOR = 1
 STARTING_ROOM = "Elevator"
+MULTIPLAYER = False # experimental, but should be relatively stable
 
 def dprint(text):
         print("[DEBUG] " + str(text))
@@ -35,6 +36,7 @@ def create_elevator():
     elevator.floor_list = floor_list
 
 def get_text(phone_number):
+    bad_chars = [')', '(', '"'] # not sure if necessary
     for value in received_texts:
         if value[0] == phone_number:
             received_texts.remove(value)
@@ -43,50 +45,64 @@ def get_text(phone_number):
                 return None
             if command[-1] == '.':
                 command = command[:-1]
+            for char in bad_chars:
+                command = command.replace(char, '')
             return command
     return None
+
+def give_feedback(player):
+    feedback = get_text(player.phone_number)
+    if feedback:
+        if feedback == "quit" or feedback == "q": # remove when not needed for debugging
+            return False
+        if len(feedback) > 0:
+            actions = player.get_actions()
+            index = feedback.find(' ')
+            if feedback.split()[0] in actions:
+                if index < 0:
+                    player.do_action(feedback, "")
+                else:
+                    player.do_action(feedback[:index], feedback[index + 1:])
+            else:
+                print('not a valid option, please try again') # change this to texting the player
+        else:
+            print('your choice was blank, please try again') # change this to texting the player
+    
+    return True
 
 def main():
     dprint('Starting...')
     initialize_floors()
     create_elevator()
-    master_player_set = set()
+    master_player_set = []
     notedata = {"description":"a note left by ty", "actions":[]}
     note = Item(notedata, "Ty's Note")
     pdata= {"name":"Ty", "phone_number":2, "starting_items":[note]}
     sample_player = Player(pdata)
     floor_list[STARTING_FLOOR].on_entrance(sample_player, STARTING_ROOM)
     sample_player.update_actions()
-    master_player_set.add(sample_player)
+    master_player_set.append(sample_player)
+    if MULTIPLAYER:
+        pdata2= {"name":"Dark Ty", "phone_number":3, "starting_items":[]}
+        sample_player2 = Player(pdata2)
+        floor_list[STARTING_FLOOR].on_entrance(sample_player2, STARTING_ROOM)
+        sample_player2.update_actions()
+        master_player_set.append(sample_player2)
     dprint('Game Ready!\n')
 
     RUNNING = True
     while (RUNNING):
+        dprint("            $$$$$$$$$$$$$$$NEW TURN$$$$$$$$$$$$$$$")
         for player in master_player_set:
-            if not player.notified:
-                dprint(player)
-                player.send_text()
-            # here you would check if a text was received, but for now we use input
-            feedback = get_text(player.phone_number)
-            if feedback:
-                if feedback == "quit" or feedback == "q": # remove when not needed for debugging
-                    RUNNING = False
-                    break
-                if len(feedback) > 0:
-                    actions = player.get_actions()
-                    index = feedback.find(' ')
-                    if feedback.split()[0] in actions:
-                        if index < 0:
-                            player.do_action(feedback, "")
-                        else:
-                            player.do_action(feedback[:index], feedback[index + 1:])
-                    else:
-                        print('not a valid option, please try again') # change this to texting the player
-                else:
-                    print('your choice was blank, please try again') # change this to texting the player
             if (RUNNING and player.notified): # remove when not needed for debugging
                 received_texts.append((player.phone_number, input()))
                 print()
+            if not player.notified:
+                dprint(player)
+                player.send_info_text()
+                print(player.name)
+            # here you would check if a text was received, but for now we use input
+            RUNNING = give_feedback(player) and RUNNING
     dprint(floor_list)
     '''
     while (game running):

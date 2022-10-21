@@ -63,6 +63,9 @@ def speak(player, args):
     for value in actions.keys():
         if actions[value].hidden:
             actions[value].use(player, args)
+    for value in player.room.players:
+        if value != player:
+            value.send_text(player.name + " said: " + args)
     return True
 
 # need to update if items have multiple different uses that can be picked from at the same time

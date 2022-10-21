@@ -50,7 +50,7 @@ class Player:
 
     def do_action(self, action_name, args):
         action = self.all_actions[action_name]
-        #if action.hidden: #disable hidden actions until discovered?
+        #if action.hidden: #disable hidden actions until discovered
         #    print('not a valid option, please try again')
         #    return
         if action.try_use(self, args): # if the user correctly input an action that could be used
@@ -58,7 +58,9 @@ class Player:
             self.update_actions()
             print('*************************************************************') # remove after debugging
 
-    def send_text(self):
+    def send_info_text(self):
+        print("[DEBUG] " + str(self.room))
+        self.update_actions() # look at update_actions call in do_action and determine if both are necessary
         message = ""
         if self.room != self.last_room:
             message += self.room.description + '\n'
@@ -69,7 +71,7 @@ class Player:
                 message += self.all_actions[value].get_command_name(self) + '\n'
         message += 'What do you choose to do?' # maybe for debugging only
         self.notified = True
-        print("[DEBUG] " + self.name + ' got sent: \n' + message) # change to sending text later
+        self.send_text("[DEBUG] " + self.name + ' got sent: \n' + message)
 
     def give_item(self, item):
         if len(self.items) == 0:
@@ -83,6 +85,8 @@ class Player:
         if len(self.items) == 0:
             self.actions.remove(self.use_action)
 
+    def send_text(self, message):
+        print("[" + self.name + "]: " + message) # change to sending text later
 
 
 '''
