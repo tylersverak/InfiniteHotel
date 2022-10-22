@@ -1,12 +1,13 @@
 import types
-import action_functions
+import actionfunctions
 
 
-func_dict = {"go":action_functions.go_to, "def":action_functions.default, "speak":action_functions.speak, "use":action_functions.item_default,
-             "pickup":action_functions.item_pickup, "drop":action_functions.item_dropoff, "itemdefault":action_functions.item_default,
-             "inspect":action_functions.inspect, "open laszewo room":action_functions.laszewo_room, 
-             "listen to music":action_functions.listen_to_music, "elevator":action_functions.elevator_move}
-param_set = set(("go", "speak", "use", "inspect", "drop", "pickup", "elevator"))
+func_dict = {"go":actionfunctions.go_to, "def":actionfunctions.default, "speak":actionfunctions.speak, "use":actionfunctions.item_default,
+             "pickup":actionfunctions.item_pickup, "drop":actionfunctions.item_dropoff, "itemdefault":actionfunctions.item_default,
+             "inspect":actionfunctions.inspect, "open laszewo room":actionfunctions.laszewo_room, 
+             "listen to music":actionfunctions.listen_to_music, "elevator":actionfunctions.elevator_move, "read random book":actionfunctions.random_book,
+             "play piano notes":actionfunctions.play_notes, "pull advanced guide 5":actionfunctions.basement_secret}
+param_set = set(("go", "speak", "use", "inspect", "drop", "pickup", "elevator", "play piano notes"))
 
 class Action():
 

@@ -1,0 +1,51 @@
+{
+
+
+
+  
+  "Floor Name":{
+    "class_":"normal",
+    "number":0,
+    "rooms":{
+
+      "Main Room":{
+        "description":"description of room",
+        "entrances":{
+          "east":"Elevator Hall"
+        },
+        "exits":{
+          "west":"Elevator Hall"
+        },
+        "features":{
+          
+          "Feature Name":{
+            "description":"description of feature",
+            "actions":[
+                "name of action (needs to already exist in the code)"
+            ],
+            "hidden actions":[
+              "see above but not listed initially"
+            ]
+          }
+        }
+      },
+
+      "Elevator Hall":{
+        "description":"You enter the elevator hallway.",
+        "entrances":{
+          "east":"Elevator",
+          "west":"Main Room"
+        },
+        "exits":{
+          "west":"Elevator",
+          "east":"Main Room"
+        }
+      }
+    }
+  }
+
+
+
+
+
+}

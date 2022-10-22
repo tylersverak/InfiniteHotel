@@ -181,7 +181,7 @@
         },
 
         "Lobby":{
-          "description":"in lobby now",
+          "description":"You're in the Infinite Hotel's Lobby.",
           "entrances":{
             "east":"Main Hall"
           },
@@ -304,7 +304,6 @@
             "west":"Elevator Hall"
           },
           "features":{
-            
             "Rock":{
               "description":"You flip over the rock... on the back is written \"YOU JUST TOOK ORDERS FROM A ROCK! ARE YOU STONED?\". Guess whoever left it here got you pretty good.",
               "actions":[
@@ -314,6 +313,131 @@
           }
         },
 
+        "Elevator Hall":{
+          "description":"You enter the elevator hallway.",
+          "entrances":{
+            "east":"Elevator",
+            "west":"Main Room"
+          },
+          "exits":{
+            "west":"Elevator",
+            "east":"Main Room"
+          }
+        }
+      }
+    },
+    "Great Library":{
+      "class_":"normal",
+      "number":0,
+      "rooms":{
+  
+        "Main Room":{
+          "description":"The library is enormous, its massive, vaulted ceiling spans over endless rows of 20 ft. tall bookcases. The walls are filled with more books and pathes in the grid-like layout, leading to an open space. A central stairway spans upward toward an office, and two smaller stairways on either side descend into the basement. Signs are posted to give further directions.",
+          "entrances":{
+            "east":"Elevator Hall",
+            "upstairs":"Basement",
+            "downstairs":"Office"
+          },
+          "exits":{
+            "west":"Elevator Hall",
+            "downstairs":"Basement",
+            "upstairs":"Office"
+          },
+          "features":{
+            
+            "Random Book":{
+              "description":"random book",
+              "actions":[
+                  "read random book"
+              ]
+            }
+          }
+        },
+
+        "Basement":{
+          "description":"You travel down the stairs to the basement. It's decorated with a posh couch, a coffee table, and several instruments. There's a few more books here too.",
+          "entrances":{
+            "downstairs":"Main Room"
+          },
+          "exits":{
+            "upstairs":"Main Room"
+          },
+          "features":{
+            
+            "Globe":{
+              "description":"You spin the globe. Cool.",
+              "actions":[
+                  "inspect"
+              ]
+            },
+            "Piano":{
+              "description":"You walk over to the piano. You can play notes by using the action PLAY followed by the notes to play, like \"play cdef\".",
+              "actions":[
+                "inspect"
+              ],
+              "hidden actions":[
+                "play piano notes"
+              ]
+            },
+            "Couch":{
+              "description":"You sit on the couch. Man, sure is comfy.",
+              "actions":[
+                "inspect"
+              ]
+            },
+            "Advanced Guide 1":{
+              "description":"You pull the book off the shelf. It reads: \"Further understanding of how and why the hotel was creating can shed some light on how to navigate it. The more you come to understand of its purpose the more it will make sense. First and foremost, it was designed to be a maze, meant to keep something out. Hints were left to help guide those that were supposed to uncover its secrets, hints that might not be obvious to the average person... \". You put the book back.",
+              "actions":[
+                "inspect"
+              ]
+            },
+            "Advanced Guide 2":{
+              "description":"You pull the book off the shelf. It reads: \"The primary 'currency' of the hotel is knowledge. It's the most important key you can have and certain knowledge rumored to be the hotel's greatest treasure. Of course, such a great treasure is sought out by many. You should work together and exchange knowledge with other explores to help both of you on your journeys. There is something else in the hotel that's searching for its treasure, or any information that would help in finding it. Hope that it doesn't find the treasure or you before you're able to escape.\". You put the book back.",
+              "actions":[
+                "inspect"
+              ]
+            },
+            "Advanced Guide 3":{
+              "description":"You pull the book off the shelf. It reads: \"Any mundane item or object could be a part of a larger puzzle. Never underestimate saying the right thing at the right time. *These puzzles are mostly predicated on information you should already be familiar with*. Try numbers and phrases that might be important, and pay special attention to objects and symbols you might be familiar with from life outside of the hotel\". You put the book back.",
+              "actions":[
+                "inspect"
+              ]
+            },
+            "Advanced Guide 4":{
+              "description":"You pull the book off the shelf. It reads: \"If you're stuck or bored, return to the library basement (floor 0) and look for hints or other floor numbers that might be helpful\". You put the book back.",
+              "actions":[
+                "inspect"
+              ]
+            },
+            "Advanced Guide 5":{
+              "description":"You try to pull the book off the shelf. You got it some of the way out, but it seems stuck.",
+              "actions":[
+                "inspect"
+              ],
+              "hidden actions":[
+                "pull advanced guide 5"
+              ]
+            }
+          }
+        },
+
+        "Underground":{
+          "description":"You're in a dark cement room.",
+          "entrances":{
+          },
+          "exits":{
+          }
+        },
+
+        "Office":{
+          "description":"You enter the elevator hallway.",
+          "entrances":{
+          },
+          "exits":{
+            "downstairs":"Main Room"
+          }
+        },
+  
         "Elevator Hall":{
           "description":"You enter the elevator hallway.",
           "entrances":{

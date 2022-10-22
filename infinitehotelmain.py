@@ -5,11 +5,11 @@ from room import Room
 from item import Item
 
 floor_list = {}
-#received_texts = [(2, "goto east"), (2, "goto east"), (2, "speak laszewo"), (2, "goto east"), (2, "inspect record player"), (2, "listen")]
+#received_texts = [(2, "speak 0"), (2, "go east"), (2, "go east"), (2, "go downstairs"), (2, "play aba"), (2, "inspect piano")]
 received_texts = []
 RUNNNING = False
 STARTING_FLOOR = 1
-STARTING_ROOM = "Elevator"
+STARTING_ROOM = "Lobby"
 MULTIPLAYER = False # experimental, but should be relatively stable
 
 def dprint(text):
