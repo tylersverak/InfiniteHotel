@@ -25,9 +25,7 @@ class Action():
         if description_disabled:
             self.description_disabled = description_disabled
         self.owner = owner
-        self.use = func_dict['def']
-        if self.name in func_dict.keys():
-            self.use = func_dict[self.name] # later need to have a dict of name:function for each action, with default being "default_func"
+        self.use = func_dict.get(self.name, func_dict['def'])
         self.enabled = enabled
         self.notified = False
 

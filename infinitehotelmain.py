@@ -1,12 +1,14 @@
 import json
+from random import sample
 from floor import Floor
 from player import Player
 from room import Room
 from item import Item
 
 floor_list = {}
-#received_texts = [(2, "speak 0"), (2, "go east"), (2, "go east"), (2, "go downstairs"), (2, "play aba"), (2, "inspect piano")]
-received_texts = []
+# if given pre commands like this, make sure they are right or it will cause weird errors
+received_texts = [(2, "go west"), (2, "go west"), (2, "speak 0"), (2, "go east"), (2, "go east"), (2, "go downstairs"), (2, "play aba"), (2, "inspect piano")]
+#received_texts = []
 RUNNNING = False
 STARTING_FLOOR = 1
 STARTING_ROOM = "Lobby"
@@ -79,7 +81,9 @@ def main():
     note = Item(notedata, "Ty's Note")
     pdata= {"name":"Ty", "phone_number":2, "starting_items":[note]}
     sample_player = Player(pdata)
+    print(STARTING_ROOM)
     floor_list[STARTING_FLOOR].on_entrance(sample_player, STARTING_ROOM)
+    print(sample_player.room.name)
     sample_player.update_actions()
     master_player_set.append(sample_player)
     if MULTIPLAYER:
@@ -135,4 +139,7 @@ TO DO
 decide how to show the player if an action need a parameter
 maybe have lobby be starting point?
 floor 6 being rock floor
+need clear implementation for "infiniteness" of hotel- probably have "solid" 10 or so first floors that map exactly
+to a specific floor, then 40 or so floors that can be accessed either with their number or if the input is too big, it
+will be hashed to be unique and modulo'd back to a range that's workable.
 """
