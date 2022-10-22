@@ -5,16 +5,18 @@
     "rooms":{
 
       "Main Room":{
-        "description":"The library is enormous, its massive, vaulted ceiling spans over endless rows of 20 ft. tall bookcases. The walls are filled with more books and pathes in the grid-like layout, leading to an open space. A central stairway spans upward toward an office, and two smaller stairways on either side descend into the basement. Signs are posted to give further directions.",
+        "description":"The library is enormous, its massive, vaulted ceiling spans over endless rows of 20 ft. tall bookcases. The walls are filled with more books and pathes in the grid-like layout, leading to an open space. A central stairway spans upward toward an office, and two smaller stairways on either side descend into the basement. There's a sign pointing North labeled 'Bathroom'.",
         "entrances":{
           "east":"Elevator Hall",
           "upstairs":"Basement",
-          "downstairs":"Office"
+          "downstairs":"Office",
+          "south":"Bathroom"
         },
         "exits":{
           "west":"Elevator Hall",
           "downstairs":"Basement",
-          "upstairs":"Office"
+          "upstairs":"Office",
+          "north":"Bathroom"
         },
         "features":{
           
@@ -24,6 +26,17 @@
                 "read random book"
             ]
           }
+        }
+      },
+
+      "Bathroom":{
+        "description": "You're in the bathroom. There's a mirror, stall and urinal, but you don't have to go.",
+        "entrances":{
+          "through tunnel":"Underground",
+          "north":"Main Room"
+        },
+        "exits":{
+          "south":"Main Room"
         }
       },
 
@@ -95,10 +108,17 @@
       },
 
       "Underground":{
-        "description":"You're in a dark cement room.",
+        "description":"You're in a dark cement room. You can barely make out a tunnel on the other side of the room. Looks cramped.",
+        "exit message":"You wiggle your way through the tight tunnel, it seems to snake around and be slowly taking you higher. The tunnel starts to descend, and as you follow you start to slide down. As you try to stop yourself, you plop out the other end and land on a floor of porcelain tiles.",
         "entrances":{
         },
         "exits":{
+          "through tunnel":"Bathroom"
+        },
+        "items":{
+          "Treasure Map":{
+            "description":"It gives you directions through a small forest, along the side of a creek. [figure this out later something about a map, floors, shovel idk]"
+          }
         }
       },
 

@@ -4,11 +4,13 @@ from floor import Floor
 from player import Player
 from room import Room
 from item import Item
+from datetime import datetime
+from datetime import timedelta
 
 floor_list = {}
 # if given pre commands like this, make sure they are right or it will cause weird errors
-received_texts = [(2, "go west"), (2, "go west"), (2, "speak 0"), (2, "go east"), (2, "go east"), (2, "go downstairs"), (2, "play aba"), (2, "inspect piano")]
-#received_texts = []
+#received_texts = [(2, "go west"), (2, "go west"), (2, "speak 0"), (2, "go east"), (2, "go east"), (2, "go downstairs"), (2, "play aba"), (2, "inspect piano")]
+received_texts = [(2, "go west"), (2, "go west")]
 RUNNNING = False
 STARTING_FLOOR = 1
 STARTING_ROOM = "Lobby"
@@ -98,15 +100,16 @@ def main():
     while (RUNNING):
         dprint("            $$$$$$$$$$$$$$$NEW TURN$$$$$$$$$$$$$$$")
         for player in master_player_set:
-            if (RUNNING and player.notified): # remove when not needed for debugging
-                received_texts.append((player.phone_number, input()))
-                print()
-            if not player.notified:
-                dprint(player)
-                player.send_info_text()
-                print(player.name)
-            # here you would check if a text was received, but for now we use input
-            RUNNING = give_feedback(player) and RUNNING
+            if player.timeout <= datetime.now():
+                if (RUNNING and player.notified): # remove when not needed for debugging
+                    received_texts.append((player.phone_number, input()))
+                    print()
+                if not player.notified:
+                    dprint(player)
+                    player.send_info_text()
+                    print(player.name)
+                # here you would check if a text was received, but for now we use input
+                RUNNING = give_feedback(player) and RUNNING
     dprint(floor_list)
     '''
     while (game running):

@@ -12,11 +12,12 @@ class Item:
         self.image_name = item_dump.get("image_name")
         self.description = item_dump["description"]
         self.actions = []
-        action_holder = item_dump['actions'] # item should always have some action, at least says description (for now items have one action)
+        action_holder = item_dump.get('actions') 
         self.pickup_action = Action("pickup", self)
         self.drop_action = Action("drop", self)
-        for value in action_holder:
-            self.actions.append(Action(value, self))
+        if action_holder:
+            for value in action_holder:
+                self.actions.append(Action(value, self))
 
     def get_actions(self):
         temp_actions = []

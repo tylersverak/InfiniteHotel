@@ -15,7 +15,7 @@ def default(player, args):
 def item_default(player, args):
     for value in player.items:
         if value.name.lower() == args:
-            player.send_text(player.name + ' used the item ' + value.name + ' (default item use)')
+            player.send_text(player.name + ' inspected ' + value.name + '. ' + value.description)
             return True
     player.send_text("Hm... you don't seem to have that item... (check your spelling?)")
     return False

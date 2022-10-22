@@ -1,5 +1,8 @@
+from datetime import datetime
+from datetime import timedelta
 from action import Action
 from feature import Feature
+
 
 class Player:
 
@@ -16,6 +19,7 @@ class Player:
         self.room = None # when put into room, room passes itself and the floor object to the player
         self.floor = None
         self.last_room = None
+        self.timeout = datetime.now()
         self.speak_action = Action('speak', self)
         self.use_action = Action('use', self)
         self.actions = [self.speak_action]
@@ -47,6 +51,9 @@ class Player:
 
     def get_actions(self):
         return self.all_actions.keys()
+
+    def set_timeout(self, s):
+        self.timeout = datetime.now() + timedelta(seconds = s)
 
     def do_action(self, action_name, args):
         action = self.all_actions[action_name]

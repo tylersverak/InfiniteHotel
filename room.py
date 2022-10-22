@@ -18,6 +18,7 @@ class Room:
         self.entrances = room_dump["entrances"] # You are going this direction when you enter
         self.exits = room_dump["exits"] # You must go this direction to exit
         self.description = room_dump["description"]
+        self.on_exit_message = room_dump.get("exit message")
         self.players = set()
         self.items = []
         self.features = []
@@ -32,6 +33,7 @@ class Room:
         item_holder = room_dump.get("items")
         if item_holder:
             for value in item_holder:
+                print(item_holder[value])
                 self.items.append(Item(item_holder[value], value)) # STILL NEED TO HANDLE FINDING ITEMS
 
     def get_actions(self):
@@ -45,6 +47,9 @@ class Room:
         return self.flags
 
     def on_exit(self, player, to_room):
+        if self.on_exit_message:
+            player.send_text(self.on_exit_message)
+            player.set_timeout(5)
         player.room = None
         self.players.remove(player)
 
