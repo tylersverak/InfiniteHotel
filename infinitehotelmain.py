@@ -1,4 +1,5 @@
 import json
+from math import floor
 from random import sample
 from floor import Floor
 from player import Player
@@ -9,7 +10,8 @@ from datetime import timedelta
 
 floor_list = {}
 # if given pre commands like this, make sure they are right or it will cause weird errors
-#received_texts = [(2, "go west"), (2, "go west"), (2, "speak 0"), (2, "go east"), (2, "go east"), (2, "go downstairs"), (2, "play aba"), (2, "inspect piano")]
+#received_texts = [(2, "go west"), (2, "go west"), (2, "speak 5"), (2, "go east"), (2, "go east"), (2, "go upstairs"), (2, "go upstairs"), (2, "go upstairs"),(2, "flip"),
+#(2, "go downstairs"), (2, "go downstairs"), (2, "go downstairs"), (2, "go west"), (2, "go west"), (2, "speak 4"), (2, "go east"), (2, "go east")]
 received_texts = [(2, "go west"), (2, "go west")]
 RUNNNING = False
 STARTING_FLOOR = 1
@@ -17,7 +19,8 @@ STARTING_ROOM = "Lobby"
 MULTIPLAYER = False # experimental, but should be relatively stable
 
 def dprint(text):
-        print("[DEBUG] " + str(text))
+    pass
+        #print("[DEBUG] " + str(text))
 
 def initialize_floors():
     dprint('Initializing floors...')
@@ -26,6 +29,8 @@ def initialize_floors():
         for floor in dump:
             dprint(floor)
             temp_floor = Floor(dump[floor], floor)
+            if temp_floor.class_ == "twin":
+                temp_floor.twin = floor_list[dump[floor]["twin"]]
             floor_list[temp_floor.number] = temp_floor
             dprint(temp_floor.get_rooms())
     dprint('Initializing floors complete.')
@@ -83,9 +88,7 @@ def main():
     note = Item(notedata, "Ty's Note")
     pdata= {"name":"Ty", "phone_number":2, "starting_items":[note]}
     sample_player = Player(pdata)
-    print(STARTING_ROOM)
     floor_list[STARTING_FLOOR].on_entrance(sample_player, STARTING_ROOM)
-    print(sample_player.room.name)
     sample_player.update_actions()
     master_player_set.append(sample_player)
     if MULTIPLAYER:
@@ -99,6 +102,7 @@ def main():
     RUNNING = True
     while (RUNNING):
         dprint("            $$$$$$$$$$$$$$$NEW TURN$$$$$$$$$$$$$$$")
+        dprint(floor_list[4].get_room("Main Deck").features[0].actions[0].enabled)
         for player in master_player_set:
             if player.timeout <= datetime.now():
                 if (RUNNING and player.notified): # remove when not needed for debugging
@@ -145,4 +149,6 @@ floor 6 being rock floor
 need clear implementation for "infiniteness" of hotel- probably have "solid" 10 or so first floors that map exactly
 to a specific floor, then 40 or so floors that can be accessed either with their number or if the input is too big, it
 will be hashed to be unique and modulo'd back to a range that's workable.
+Hidden actions need something to stop them from having behavior when someone speaks, but still needs to be able to
+trigger when someone says the right thing.
 """

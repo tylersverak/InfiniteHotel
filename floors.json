@@ -5,7 +5,7 @@
     "rooms":{
 
       "Main Room":{
-        "description":"The library is enormous, its massive, vaulted ceiling spans over endless rows of 20 ft. tall bookcases. The walls are filled with more books and pathes in the grid-like layout, leading to an open space. A central stairway spans upward toward an office, and two smaller stairways on either side descend into the basement. There's a sign pointing North labeled 'Bathroom'.",
+        "description":"The library is enormous, its massive, vaulted ceiling spans over endless rows of 20 ft. tall bookcases. The walls are filled with more books and paths in the grid-like layout, leading to an open space. A central stairway spans upward toward an office, and two smaller stairways on either side descend into the basement. There's a sign pointing North labeled 'Bathroom'.",
         "entrances":{
           "east":"Elevator Hall",
           "upstairs":"Basement",
@@ -151,7 +151,7 @@
     "rooms":{
 
       "Main Hall":{
-        "description":"You're in a small hallway. There's a bunch of numbered hotel rooms, and at one end there is a large lobby with a handful of ammenities. At the other end, a mysterious elevator with a sign next to it. The sign has some instructions about the elevator, and there's a dial above the elevator to indicate what floor the elevator is on. On one end of the dial has a 0, the other has a ∞.",
+        "description":"You're in a small hallway. There's a bunch of numbered hotel rooms, and at the East end there is a large lobby with a handful of ammenities. At the West end, a mysterious elevator with a sign next to it. The sign has some instructions about the elevator, and there's a dial above the elevator to indicate what floor the elevator is on. On one end of the dial has a 0, the other has a ∞.",
         "entrances":{
           "west":"Lobby",
           "east" : "Elevator",
@@ -242,44 +242,8 @@
           "west":"Main Hall"
         },
         "features":{
-          "Guide 1":{
-            "description":"You pull the book \"Guide 1\" off the shelf. It reads: \n\"Welcome to the Infinite Hotel! Here are some books to help give you some idea of how to navigate the hotel. Everyone participating will be able to interact with each other, and any changes you make to the environment will be visible to other people. Feel free to explore as much as you want, and check out the other guides! [contact me if you have any questions you can't figure out]\". You put the book back on the shelf.",
-            "actions":[
-                "inspect"
-            ]
-          },
-          "Guide 2":{
-            "description":"You pull the book \"Guide 2\" off the shelf. It reads: \n\"The first thing to learn is how to provide input. You will receive messages containing all the actions you can do. Each action is indicated by a \">\" followed by a word in all caps. If you want to do that action, type the capitalized part of the message. For example, if you were given the option \"> PRESS the button\" you would need to only type \"press\" to do that action (don't worry about capitalization in the messages you send). Some actions have to be given in a specific manner, which is covered in book 3\". You put the book back on the shelf.",
-            "actions":[
-                "inspect"
-            ]
-          },
-          "Guide 3":{
-            "description":"You pull the book \"Guide 3\" off the shelf. It reads: \n\"Some actions need some additional info to be performed. For example, \"USE\" lets you use an item you have. But you also need to specify which item! If given the option \"> USE Shovel, Flashlight, Ty's Note, Match\" you would respond with \"use ty's note\" to use that item. Notice upper or lower case doesn't matter, but otherwise the name must match exactly. \"SPEAK\" is a unique action that requires you to enter what you will say, for example \"speak very cool\" would make your character say \"very cool\" out loud. If you use SPEAK, other people in the room will hear whatever you say (maybe you should say hi?)\". You put the book back on the shelf.",
-            "actions":[
-                "inspect"
-            ]
-          },
-          "Guide 4":{
-            "description":"You pull the book \"Guide 4\" off the shelf. It reads: \n\"Not all actions have an effect in every room. Try experimenting with where you do certain actions to see if something new happens. There are also a few hidden actions that can be revealed as you explore. If you mistype an action or the additional info, it will prompt you to try again\". You put the book back on the shelf.",
-            "actions":[
-                "inspect"
-            ]
-          },
-          "Guide 5":{
-            "description":"You pull the book \"Guide 5\" off the shelf. It reads: \n\"The GO action: GO is important because it allows you to move. The options GO lets you pick are usually compass directions to help give you an idea of how the space is laid out. Sometimes you may encounter a passage way that is locked or otherwise blocked\". You put the book back on the shelf.",
-            "actions":[
-                "inspect"
-            ]
-          },
-          "Guide 6":{
-            "description":"You pull the book \"Guide 6\" off the shelf. It reads: \n\"Items: items can be found in the hotel. You can DROP, PICKUP, or USE items. If you DROP an item, it will remain in that room and other players can find it and pick it up. You can PICKUP items left by other players or found in the hotel (if you are given the option of picking up an item and are told the item doesn't seem to be there, it usually someone grabbed it after you entered the room but before you tried to pick it up). While all items can be used with USE, some items have no functionality and are mean to be moved to another room or are decorative\". You put the book back on the shelf.",
-            "actions":[
-                "inspect"
-            ]
-          },
-          "Guide 7":{
-            "description":"You pull the book \"Guide 7\" off the shelf. It reads: \n\"The Infinite Elevator: the elevator in the hotel is, well, infinite and allows you to travel to any possible number floor. It's a magic elevator (duh) so once you are in the elevator, you only need to speak what floor you want to go to, for example \"speak 6\" would take you to floor 6 [hint: don't go to floor 6]. You're currently on the main floor (1). If you wait too long in the elevator, it will kick you out. If someone else is using the elevator, you won't be able to use it, so wait 10 seconds or so and try again\". You put the book back on the shelf.",
+          "Guide":{
+            "description":"You pull the book \"Infinite Hotel Guide\" off the shelf. It reads: \n\"Welcome to the Infinite Hotel! Here are some books to help give you some idea of how to navigate the hotel. Everyone participating will be able to interact with each other, and any changes you make to the environment will be visible to other people. Feel free to explore as much as you want, and check out the other guides! [contact me if you have any questions you can't figure out].\nThe first thing to learn is how to provide input. You will receive messages containing all the actions you can do. Each action is indicated by a \">\" followed by a word in all caps. If you want to do that action, type the capitalized part of the message. For example, if you were given the option \"> PRESS the button\" you would need to only type \"press\" to do that action (don't worry about capitalization in the messages you send).\nSome actions need some additional info to be performed. We call this additional info a parameter, and actions that need a parameter have a \"*\" behind the name of the action. For example, \"USE\" lets you use an item you have. But you also need to specify which item! If given the option \"> USE * Shovel, Flashlight, Ty's Note, Match\" you would respond with \"use ty's note\" to use that item. Notice upper or lower case doesn't matter, but otherwise the name must match exactly. \"SPEAK\" is a unique action that requires you to enter what you will say, for example \"speak very cool\" would make your character say \"very cool\" out loud. If you use SPEAK, other people in the room will hear whatever you say (maybe you should say hi?). Not all actions have an effect in every room. Try experimenting with where you do certain actions to see if something new happens. There are also a few hidden actions that can be revealed as you explore. If you mistype an action or the additional info, it will prompt you to try again.\nThe GO action: GO is important because it allows you to move. The options GO lets you pick are usually compass directions to help give you an idea of how the space is laid out. Sometimes you may encounter a passage way that is locked or otherwise blocked.\nItems: items can be found in the hotel. You can DROP, PICKUP, or USE items. If you DROP an item, it will remain in that room and other players can find it and pick it up. You can PICKUP items left by other players or found in the hotel (if you are given the option of picking up an item and are told the item doesn't seem to be there, it usually someone grabbed it after you entered the room but before you tried to pick it up). While all items can be used with USE, some items have no functionality and are mean to be moved to another room or are decorative.\nThe Infinite Elevator: the elevator in the hotel is, well, infinite and allows you to travel to any possible number floor. It's a magic elevator (duh) so once you are in the elevator, you only need to speak what floor you want to go to, for example \"speak 6\" would take you to floor 6 [hint: don't go to floor 6]. You're currently on the main floor (1). If you wait too long in the elevator, it will kick you out. If someone else is using the elevator, you won't be able to use it, so wait 10 seconds or so and try again. If you want more information on how to play or are having trouble uncovering hints, visit the Great Library on floor 0\".\nYou put the book back on the shelf.",
             "actions":[
                 "inspect"
             ]
@@ -403,12 +367,11 @@
               "hiddenroomswitch":{
                 "description":"",
                 "hidden actions":[
-                    "open laszewo room"
+                    "laszewo"
                 ]
               }
             }
           },
-
 
           "Laszewo Room":{
             "description":"You enter the passageway in the wall and find yourself in a hidden room. A small table holds a record player, note, and a picture.",
@@ -436,6 +399,141 @@
                 }
               }
           }
+      }
+    },
+
+    "Boat":{
+      "class_":"normal",
+      "number":4,
+      "rooms":{
+
+        "Main Deck":{
+          "description":"As you walk out of the hall, the ground shifts beneath you. The smell of the sea is apparent, and you notice you've walked onto a boat. There are signs of life but you don't see any of the crew.",
+          "entrances":{
+            "east":"Elevator Hall"
+          },
+          "exits":{
+            "west":"Elevator Hall"
+          },
+          "features":{
+            "The Helm":{
+              "description":"The boat's helm",
+              "custom actions":{
+                    "steer toward shore":{
+                      "enabled":false,
+                      "description enabled":"steer",
+                      "description disabled":"not steer",
+                      "hidden":false
+                    }
+              }
+            }
+          },
+          "items":{
+            "Fish":{
+              "description":"It's a fish you found on the deck of a boat."
+            }
+          }
+        },
+
+        "Elevator Hall":{
+          "description":"You enter the elevator hallway.",
+          "entrances":{
+            "east":"Elevator",
+            "west":"Main Deck"
+          },
+          "exits":{
+            "west":"Elevator",
+            "east":"Main Deck"
+          }
+        }
+      }
+    },
+
+    "Lighthouse Floor":{
+      "class_":"twin",
+      "twin":4,
+      "number":5,
+      "rooms":{
+
+        "Entryway":{
+          "description":"You enter a small, circular room. The air smells like sea water and the wooden support beams seem to be weak. Paint peels off the wall. You can see the ocean from out of the dust-covered window. It's late, and quite dark outside. A spiral staircase loops around the edge of the wall to the next story.",
+          "entrances":{
+            "east":"Elevator Hall",
+            "downstairs":"Second Story"
+          },
+          "exits":{
+            "west":"Elevator Hall",
+            "upstairs":"Second Story"
+          },
+          "features":{
+            "Journal":{
+              "description":"The journal reads: \"They've been gone for two weeks now. At this point, the will have been without supplies for 8 days. My only hope is the current has pushed them to southern shores, and they must travel back by land. More likely, whatever they were after, they perished trying to find it. I hope the lamp can lead them home.\"",
+              "actions":[
+                  "inspect"
+              ]
+            },
+            "Sign":{
+              "description":"A sign on the wall. It says: \"Fun Fact: The lighting apparatus of a lighthouse is called a lamp (even if it's electric)!\"",
+              "actions":[
+                  "inspect"
+              ]
+            }
+          }
+        },
+
+        "Second Story":{
+          "description":"You arrive on the second story.",
+          "entrances":{
+            "downstairs":"Third Story",
+            "upstairs":"Entryway"
+          },
+          "exits":{
+            "upstairs":"Third Story",
+            "downstairs":"Entryway"
+          }
+        },
+
+        "Third Story":{
+          "description":"You arrive on the third story.",
+          "entrances":{
+            "upstairs":"Second Story",
+            "downstairs":"Lookout"
+          },
+          "exits":{
+            "downstairs":"Second Story",
+            "upstairs":"Lookout"
+          }
+        },
+
+        "Lookout":{
+          "description":"You come to the top of the lighthouse. The ocean air smells foul. You can't see much, but you can hear the waves crashing against the shore. The lamp is off.",
+          "entrances":{
+            "upstairs":"Third Story"
+          },
+          "exits":{
+            "downstairs":"Third Story"
+          },
+          "features":{
+            "Lever":{
+              "description":"switch",
+              "actions":[
+                "flip power switch"
+              ]
+            }
+          }
+        },
+
+        "Elevator Hall":{
+          "description":"You enter the elevator hallway.",
+          "entrances":{
+            "east":"Elevator",
+            "west":"Entryway"
+          },
+          "exits":{
+            "west":"Elevator",
+            "east":"Entryway"
+          }
+        }
       }
     },
     

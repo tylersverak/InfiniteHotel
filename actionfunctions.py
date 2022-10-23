@@ -68,7 +68,7 @@ def speak(player, args):
     player.send_text(player.name + ' said ' + args + ' in ' + player.room.name)
     actions = player.get_action_objects()
     for value in actions.keys():
-        if actions[value].hidden:
+        if actions[value].hidden and (args == actions[value].name or actions[value].name == "elevator"):
             actions[value].use(player, args)
     for value in player.room.players:
         if value != player:
@@ -90,7 +90,7 @@ def inspect(player, args):
         if value.name.lower() == args:
             player.send_text(player.name + ' inspected the ' + value.name + '.')
             player.send_text(value.description)
-            for hidden_action in value.hidden_actions:
+            for hidden_action in value.hidden_actions: # make hidden actions visible for that one feature
                 hidden_action.hidden = False
             return True
     player.send_text("Hm... whatever you're trying to inspect isn't here... (check your spelling?)")
@@ -102,6 +102,7 @@ def laszewo_room(player, args):
         player.floor.rooms['Main Hall'].entrances['west'] = 'Laszewo Room'
         player.send_text("The symbol on the ground reacted to your words! The circle in the wall retracted, revealing a secret room!")
         return True
+    raise Exception(player.name + " tried to open secret L room from somewhere else.")
 
 def listen_to_music(player, args):
     player.send_text('Hope you like it!')
@@ -134,6 +135,24 @@ def random_book(player, args):
     player.send_text(random.choice(LIST_OF_BOOKS))
     return True
 
+# HARDCODED TO ASSUME BOAT IS FLOOR 4!!!
+def lighthouse_switch(player, args):
+    other = player.floor.get_room("Elevator").floor_list[4]
+    temp_features = other.get_room("Main Deck").features
+    helm_action = None
+    for value in temp_features:
+        if value.name == "The Helm":
+            helm_action = value.actions[0]
+            break
+    if helm_action.enabled:
+        player.send_text("You flip the switch and the lamp goes off, you notice how dark it is.")
+        player.room.description = "You come to the top of the lighthouse. The ocean air smells foul. You can't see much, but you can hear the waves crashing against the shore. The lamp is off."
+    else:
+        player.send_text("You flip the switch and the lamp comes on, shining a light over the sea.")
+        player.room.description = "You come to the top of the lighthouse. The ocean air smells foul. You can't see much, but you can hear the waves crashing against the shore. The lamp is on and illuminates the sea."
+    helm_action.enabled = not helm_action.enabled # flip whether light can be seen
+    return True
+
 def play_notes(player, args):
     notes = ""
     print(args.split()[0])
@@ -161,4 +180,8 @@ def basement_secret(player, args):
         for action in value.hidden_actions:
             action.hidden = True
     player.send_text("As you pull the book, the bookshelves swings out of the wall and you feel the floor moving under your feet. The whole bookshelf rotates 180 degrees, throws you into a secret room opposite from the basement you were in, and swings around again, sealing you inside.")
+    return True
+
+def steer_boat(player, args):
+    player.send_text("You notice the lighthouse in the distant, and steer towards it. You're careful as you get closer to shore and notice a dock where you pull the boat into. ")
     return True

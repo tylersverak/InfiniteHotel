@@ -11,14 +11,21 @@ class Feature():
         self.description = feature_dump["description"]
         self.actions = []
         self.hidden_actions = []
+        self.custom_actions = []
         hidden_holder = feature_dump.get("hidden actions")
         action_holder = feature_dump.get("actions")
+        custom_holder = feature_dump.get("custom actions")
         if action_holder:
             for value in action_holder:
                 self.actions.append(Action(value, self))
         if hidden_holder:
             for value in hidden_holder:
                 self.hidden_actions.append(Action(value, self, hidden=True))
+        if custom_holder:
+            for value in custom_holder:
+                temp = Action(value, self, enabled=custom_holder[value]["enabled"], description_enabled=custom_holder[value]["description enabled"],
+                    description_disabled=custom_holder[value]["description disabled"], hidden=custom_holder[value]["hidden"])
+                self.actions.append(temp)
 
     def get_actions(self):
         temp_actions = []

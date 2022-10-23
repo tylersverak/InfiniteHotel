@@ -6,13 +6,16 @@ func_dict = {"go":actionfunctions.go_to, "def":actionfunctions.default, "speak":
              "pickup":actionfunctions.item_pickup, "drop":actionfunctions.item_dropoff, "itemdefault":actionfunctions.item_default,
              "inspect":actionfunctions.inspect, "open laszewo room":actionfunctions.laszewo_room, 
              "listen to music":actionfunctions.listen_to_music, "elevator":actionfunctions.elevator_move, "read random book":actionfunctions.random_book,
-             "play piano notes":actionfunctions.play_notes, "pull advanced guide 5":actionfunctions.basement_secret}
+             "play piano notes":actionfunctions.play_notes, "pull advanced guide 5":actionfunctions.basement_secret,
+             "flip power switch":actionfunctions.lighthouse_switch, "steer toward shore":actionfunctions.steer_boat}
 param_set = set(("go", "speak", "use", "inspect", "drop", "pickup", "elevator", "play piano notes"))
 
 class Action():
 
     def __repr__(self):
+        if self.enabled:
             return ("Action " + self.name + " does: " + self.description_enabled)
+        return("Action " + self.name + " does: " + self.description_disabled)
 
     def __init__(self, name, owner, enabled = True, description_enabled = None, description_disabled = None, hidden = False) -> None:
         self.name = name
@@ -30,6 +33,11 @@ class Action():
         self.notified = False
 
     def try_use(self, player, args):
+        if not self.enabled:
+            print(self.owner)
+            print( player.floor.get_room("Elevator").floor_list[4].get_room("Main Deck").features[0].actions[0].owner) # if true, then light goes from off to on
+            player.send_text(self.description_disabled)
+            return True
         if args == "" and self.parameters:
             print('no parameters found, please try again') # text to player
             return False
@@ -41,32 +49,37 @@ class Action():
     def get_command_name(self, player):
         res = "> "
         if self.name == "go":
-            res += "GO "
+            res += "GO * "
             for value in player.room.exits: # assumes room has at least one exit, which it should
                 res += value + ", "
             return res[:-2]
         elif self.name == "use" or self.name == "drop":
-            res += self.name.upper() + " "
+            res += self.name.upper() + " * "
             for value in player.items:
                 res += value.name + ", "
             return res[:-2]
         elif self.name == "inspect":
-            res += "INSPECT "
+            res += "INSPECT * "
             for value in player.room.features:
                 name = value.name
                 if value.has_action_by_name("inspect"):
                     res += name + ", "
             return res[:-2]
         elif self.name == "pickup":
-            res += "PICKUP "
+            res += "PICKUP * "
             for value in player.room.items:
                 res += value.name + ", "
             return res[:-2]
+        elif self.name == "speak":
+            return res + "SPEAK *"
         else:
             temp_str = self.name.split()
             temp_str[0] = temp_str[0].upper()
             res += " ".join(temp_str)
             return res
+
+    def flip_enabled(self):
+        self.enabled = not self.enabled
 
 '''
 each action's function has to have its own logic for catching argument edgecases,

@@ -25,7 +25,6 @@ class Room:
         for value in self.exits.keys():
             door_data= {"description":"A door that leads " + value, "actions":["go"]}
             self.features.append(Feature(door_data, "Door to " + value))
-        
         feature_holder = room_dump.get("features")
         if feature_holder:
             for value in feature_holder:
