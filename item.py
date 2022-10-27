@@ -21,10 +21,10 @@ class Item:
 
     def get_actions(self):
         temp_actions = []
-        for value in self.actions:
-            temp_actions.append(value)
         if self.owner:
             temp_actions.append(self.drop_action)
+            for value in self.actions:
+                temp_actions.append(value)
         else:
             temp_actions.append(self.pickup_action)
         return temp_actions

@@ -2,7 +2,7 @@ from datetime import datetime
 from datetime import timedelta
 from action import Action
 from feature import Feature
-
+from item import Item
 
 class Player:
 
@@ -21,7 +21,7 @@ class Player:
         self.last_room = None
         self.timeout = datetime.now()
         self.speak_action = Action('speak', self)
-        self.use_action = Action('use', self)
+        self.use_action = Action('examine', self)
         self.actions = [self.speak_action]
         self.items = []
         for value in player_dump['starting_items']:
@@ -52,6 +52,12 @@ class Player:
     def get_actions(self):
         return self.all_actions.keys()
 
+    def get_item(self, name):
+        for value in self.items:
+            if value.name == name:
+                return value
+        return None
+
     def set_timeout(self, s):
         self.timeout = datetime.now() + timedelta(seconds = s)
 
@@ -75,7 +81,7 @@ class Player:
         for value in self.all_actions.keys():
             action = self.all_actions[value]
             if not action.hidden:
-                message += self.all_actions[value].get_command_name(self) + '\n'
+                message += action.get_command_name(self, action.parameters) + '\n'
         message += 'What do you choose to do?' # maybe for debugging only
         self.notified = True
         self.send_text("[DEBUG] " + self.name + ' got sent: \n' + message)
@@ -86,6 +92,9 @@ class Player:
         self.items.append(item)
         item.owner = self
 
+    def make_item(self, item_dump, name):
+        self.give_item(Item(item_dump, name, owner=self))
+
     def take_item(self, item):
         self.items.remove(item)
         item.owner = None
@@ -93,6 +102,7 @@ class Player:
             self.actions.remove(self.use_action)
 
     def send_text(self, message):
+        # send_twilio_text("[" + self.name + "]: " + message) # twilio account got no money in it lol
         print("[" + self.name + "]: " + message) # change to sending text later
 
 

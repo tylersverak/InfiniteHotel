@@ -5,7 +5,7 @@
     "rooms":{
 
       "Main Room":{
-        "description":"The library is enormous, its massive, vaulted ceiling spans over endless rows of 20 ft. tall bookcases. The walls are filled with more books and paths in the grid-like layout, leading to an open space. A central stairway spans upward toward an office, and two smaller stairways on either side descend into the basement. There's a sign pointing North labeled 'Bathroom'.",
+        "description":"The library is enormous, its massive, vaulted ceiling spans over endless rows of 20 ft. tall bookcases. The walls are filled with more books and paths in the grid-like layout, leading to an open space. A central stairway spans upward toward an office, and two smaller stairways on either side descend into the basement. There's a sign pointing north labeled 'Bathroom'.",
         "entrances":{
           "east":"Elevator Hall",
           "upstairs":"Basement",
@@ -109,7 +109,7 @@
 
       "Underground":{
         "description":"You're in a dark cement room. You can barely make out a tunnel on the other side of the room. Looks cramped.",
-        "exit message":"You wiggle your way through the tight tunnel, it seems to snake around and be slowly taking you higher. The tunnel starts to descend, and as you follow you start to slide down. As you try to stop yourself, you plop out the other end and land on a floor of porcelain tiles.",
+        "exit message":"You wiggle your way through the tight tunnel, which leads to a utility ladder. You climb up the metal rungs and pop your head through a hatch. As you climb out of the tunnel, the hatch closes behind you.",
         "entrances":{
         },
         "exits":{
@@ -117,17 +117,44 @@
         },
         "items":{
           "Treasure Map":{
-            "description":"It gives you directions through a small forest, along the side of a creek. [figure this out later something about a map, floors, shovel idk]"
+            "description":"It's a guide to treasure! There's several sections with dotted lines leading to a big X. There's directions written on the back in sloppy handwriting: \"hey cool you found a map. lets see how well you can read. first thing first you gotta get out of the basement which is easy. second you gotta go find a big run down house, should have a few floors, anyways go to the basement then the courtyard then type 'shovel' (without the single quotes, obviously). thirdly, once you have the shovel, go find the creek, follow the creek and when it splits, go northeast, and follow that to the end, where you should dig with the shovel. fourth, come back here to the library (floor 0), and swing the thing you found buried in the creek in the main room.\""
           }
         }
       },
 
       "Office":{
-        "description":"You enter the elevator hallway.",
+        "description":"You enter a small office. There's a desk with a swivel chair, and a few notes left on it. A medal lays on the other side of the desk.",
         "entrances":{
         },
         "exits":{
           "downstairs":"Main Room"
+        },
+        "features":{
+          "Note 1":{
+            "description":"It's a note left for you. It reads: \"yo how's it going. you did a bunch of stuff to get here so im gonna assume you've enjoyed it enough to stick with it for a bit. real cool stuff. anyways, glad you can follow directions. you might wonder 'is there an endgame to all this? is there a point or ending?' in which case sheesh. relax. one step at a time. im not gonna spoil everything, but you might have some luck if you can find the vault floor. its a floor with a bunch of locked vault doors. this is a lot to read so ill split it up in a few notes.\"",
+            "actions":[
+              "inspect"
+            ]
+          },
+          "Note 2":{
+            "description":"Note 2: \"so speaking of the vault doors, each door has a 4 digit pin associated with it, and there's 7 different tasks you need to do to get the pins. once you have a pin, the vault should tell you which pin it wants, you can unlock that door and go to the next room. you gotta unlock the doors in order. also, you're definitely gonna need to start working with other people, because if they pick up a piece of some puzzle and lose it you're hosed. other people may have seen one of the pins already and can save you all time. one more note then im done i swear.\"",
+            "actions":[
+              "inspect"
+            ]
+          },
+          "Note 3":{
+            "description":"Note 3: \"obviously if you open all 7 doors there's something at the end. ill go ahead and give you the first code. its in the room, just inspect the medal. that pin should open the first door.\"",
+            "actions":[
+              "inspect"
+            ]
+          },
+          "Medal":{
+            "description":"It's a gold medal with a teardrop shape on it. On the back is written \"ABILITY:6430\".",
+            "action":[
+              "inspect"
+            ]
+          }
+          
         }
       },
 
@@ -243,7 +270,7 @@
         },
         "features":{
           "Guide":{
-            "description":"You pull the book \"Infinite Hotel Guide\" off the shelf. It reads: \n\"Welcome to the Infinite Hotel! Here are some books to help give you some idea of how to navigate the hotel. Everyone participating will be able to interact with each other, and any changes you make to the environment will be visible to other people. Feel free to explore as much as you want, and check out the other guides! [contact me if you have any questions you can't figure out].\nThe first thing to learn is how to provide input. You will receive messages containing all the actions you can do. Each action is indicated by a \">\" followed by a word in all caps. If you want to do that action, type the capitalized part of the message. For example, if you were given the option \"> PRESS the button\" you would need to only type \"press\" to do that action (don't worry about capitalization in the messages you send).\nSome actions need some additional info to be performed. We call this additional info a parameter, and actions that need a parameter have a \"*\" behind the name of the action. For example, \"USE\" lets you use an item you have. But you also need to specify which item! If given the option \"> USE * Shovel, Flashlight, Ty's Note, Match\" you would respond with \"use ty's note\" to use that item. Notice upper or lower case doesn't matter, but otherwise the name must match exactly. \"SPEAK\" is a unique action that requires you to enter what you will say, for example \"speak very cool\" would make your character say \"very cool\" out loud. If you use SPEAK, other people in the room will hear whatever you say (maybe you should say hi?). Not all actions have an effect in every room. Try experimenting with where you do certain actions to see if something new happens. There are also a few hidden actions that can be revealed as you explore. If you mistype an action or the additional info, it will prompt you to try again.\nThe GO action: GO is important because it allows you to move. The options GO lets you pick are usually compass directions to help give you an idea of how the space is laid out. Sometimes you may encounter a passage way that is locked or otherwise blocked.\nItems: items can be found in the hotel. You can DROP, PICKUP, or USE items. If you DROP an item, it will remain in that room and other players can find it and pick it up. You can PICKUP items left by other players or found in the hotel (if you are given the option of picking up an item and are told the item doesn't seem to be there, it usually someone grabbed it after you entered the room but before you tried to pick it up). While all items can be used with USE, some items have no functionality and are mean to be moved to another room or are decorative.\nThe Infinite Elevator: the elevator in the hotel is, well, infinite and allows you to travel to any possible number floor. It's a magic elevator (duh) so once you are in the elevator, you only need to speak what floor you want to go to, for example \"speak 6\" would take you to floor 6 [hint: don't go to floor 6]. You're currently on the main floor (1). If you wait too long in the elevator, it will kick you out. If someone else is using the elevator, you won't be able to use it, so wait 10 seconds or so and try again. If you want more information on how to play or are having trouble uncovering hints, visit the Great Library on floor 0\".\nYou put the book back on the shelf.",
+            "description":"You pull the book \"Infinite Hotel Guide\" off the shelf. It reads: \n\"Welcome to the Infinite Hotel! Here are some books to help give you some idea of how to navigate the hotel. Everyone participating will be able to interact with each other, and any changes you make to the environment will be visible to other people. Feel free to explore as much as you want, and check out the other guides! [contact me if you have any questions you can't figure out].\nThe first thing to learn is how to provide input. You will receive messages containing all the actions you can do. Each action is indicated by a \">\" followed by a word in all caps. If you want to do that action, type the capitalized part of the message. For example, if you were given the option \"> PRESS the button\" you would need to only type \"press\" to do that action (don't worry about capitalization in the messages you send).\nSome actions need some additional info to be performed. We call this additional info a parameter, and actions that need a parameter have a \"*\" behind the name of the action. For example, \"EXAMINE\" lets you look at an item you have. But you also need to specify which item! If given the option \"> EXAMINE * Shovel, Flashlight, Ty's Note, Match\" you would respond with \"examine ty's note\" to look at that item. Notice upper or lower case doesn't matter, but otherwise the name must match exactly. \"SPEAK\" is a unique action that requires you to enter what you will say, for example \"speak very cool\" would make your character say \"very cool\" out loud. If you use SPEAK, other people in the room will hear whatever you say (maybe you should say hi?). Not all actions have an effect in every room. Try experimenting with where you do certain actions to see if something new happens. There are also a few hidden actions that can be revealed as you explore. If you mistype an action or the additional info, it will prompt you to try again.\nThe GO action: GO is important because it allows you to move. The options GO lets you pick are usually compass directions to help give you an idea of how the space is laid out. Sometimes you may encounter a passage way that is locked or otherwise blocked.\nItems: items can be found in the hotel. You can DROP, PICKUP, or EXAMINE items. If you DROP an item, it will remain in that room and other players can find it and pick it up. You can PICKUP items left by other players or found in the hotel (if you are given the option of picking up an item and are told the item doesn't seem to be there, it usually means someone grabbed it after you entered the room but before you tried to pick it up). You can check out the item with EXAMINE, which may give hints how you can use it. While all items can be looked at with EXAMINE, some items have no functionality and are mean to be moved to another room or are decorative. Some items have a specific action that they will enable you to do, like how an apple item might have the action \"EAT\" that you can use at any time you have the item. Item actions will be listed along with your normal other actions.\nThe Infinite Elevator: the elevator in the hotel is, well, infinite and allows you to travel to any possible number floor. It's a magic elevator (duh) so once you are in the elevator, you only need to speak what floor you want to go to, for example \"speak 6\" would take you to floor 6 [hint: don't go to floor 6]. You're currently on the main floor (1). If you wait too long in the elevator, it will kick you out. If someone else is using the elevator, you won't be able to use it, so wait 10 seconds or so and try again. While the elevator is infinite, you may find two different numbers will take you to the same floor. In that case, try a new number to keep exploring.\nIf you want more information on how to play or are having trouble uncovering hints, visit the Great Library on floor 0. Also if you're having a hard time, always make sure to read through the messages you get! Often you will have the hints you need already, if you are paying attention.\".\nYou put the book back on the shelf.",
             "actions":[
                 "inspect"
             ]
@@ -275,7 +302,7 @@
             ]
           },
           "Blackboard":{
-            "description":"You flip the blackboard around in its frame and look in the mirror. In the reflection, there are no stray marks, and a message is written in clear, plain text: \"[hint fix this later]\". When you flip the blackboard back around, you notice the symbols are still there.",
+            "description":"You flip the blackboard around in its frame and look in the mirror. In the reflection, there are no stray marks, and a message is written in clear, plain text: \"SPIRITS:5007\". When you flip the blackboard back around, you notice the symbols are still there.",
             "actions":[
                 "inspect"
             ]
@@ -367,7 +394,7 @@
               "hiddenroomswitch":{
                 "description":"",
                 "hidden actions":[
-                    "laszewo"
+                    "Laszewo"
                 ]
               }
             }
@@ -459,11 +486,13 @@
           "description":"You enter a small, circular room. The air smells like sea water and the wooden support beams seem to be weak. Paint peels off the wall. You can see the ocean from out of the dust-covered window. It's late, and quite dark outside. A spiral staircase loops around the edge of the wall to the next story.",
           "entrances":{
             "east":"Elevator Hall",
-            "downstairs":"Second Story"
+            "downstairs":"Second Story",
+            "inside":"Dock"
           },
           "exits":{
             "west":"Elevator Hall",
-            "upstairs":"Second Story"
+            "upstairs":"Second Story",
+            "outside":"Dock"
           },
           "features":{
             "Journal":{
@@ -476,6 +505,40 @@
               "description":"A sign on the wall. It says: \"Fun Fact: The lighting apparatus of a lighthouse is called a lamp (even if it's electric)!\"",
               "actions":[
                   "inspect"
+              ]
+            },
+            "Apparatus":{
+              "description":"A bizarre apparatus constructed of pipes and a long looking glass pointed at a concave indentation. It's been built around a missing piece.",
+              "actions":[
+                  "inspect"
+              ]
+            }
+          }
+        },
+
+        "Dock":{
+          "description":"You find yourself at a dock outside the lighthouse. The dock extends out into the sea.",
+          "entrances":{
+            "outside":"Entryway"
+          },
+          "exits":{
+            "inside":"Entryway"
+          }
+        },
+
+        "Boat 2":{
+          "description":"The boat has come to shore and is parked at the dock.",
+          "entrances":{
+            "east":"Dock"
+          },
+          "exits":{
+            "west":"Dock"
+          },
+          "items":{
+            "Sea Orb":{
+              "description":"A mysterious orb you found on a boat stranded at sea. The will of the ocean courses through it. You sense it is a smaller part of something greater.",
+              "actions":[
+                "orb"
               ]
             }
           }
@@ -569,6 +632,700 @@
           "exits":{
             "west":"Elevator",
             "east":"Main Room"
+          }
+        }
+      }
+    },
+
+    "Slots Room":{
+      "class_":"normal",
+      "number":7,
+      "rooms":{
+
+        "Gambling Floor":{
+          "description":"The floor is a cheap, thin red carpet. The air smells of cigarettes and cheap liquor. The walls are decorated with images of playing cards and a large red and black striped wheel. Several rows of machines, illuminated by bright colorful lights, beckon you with the sound of their bells.",
+          "entrances":{
+            "east":"Elevator Hall"
+          },
+          "exits":{
+            "west":"Elevator Hall"
+          },
+          "features":{
+            "Slot Machine":{
+              "description":"A shiny machine with a lever.",
+              "actions":[
+                  "pull machine lever"
+              ]
+            }
+          }
+        },
+
+        "Prize Room":{
+          "description":"room for prizes",
+          "entrances":{
+          },
+          "exits":{
+          },
+          "items":{
+            "Lemon":{
+              "description":"It's a lemon you won as a prize."
+            },
+            "Frying Pan":{
+              "description":"It's a frying pan you won as a prize."
+            }
+          }
+        },
+
+        "Elevator Hall":{
+          "description":"You enter the elevator hallway.",
+          "entrances":{
+            "east":"Elevator",
+            "west":"Gambling Floor"
+          },
+          "exits":{
+            "west":"Elevator",
+            "east":"Gambling Floor"
+          }
+        }
+      }
+    },
+
+    "Creek Floor":{
+      "class_":"normal",
+      "number":8,
+      "rooms":{
+
+        "Main Creek":{
+          "description":"You step onto the shore of a small creek. The banks are steep, and behind the door to your west are thick bushes, blocking your way. There's a spot where you can hop to the other side of the creek.",
+          "entrances":{
+            "east":"Elevator Hall",
+            "west":"Split"
+          },
+          "exits":{
+            "west":"Elevator Hall",
+            "east":"Split"
+          }
+        },
+
+        "Split":{
+          "description":"To your east, the creek splits off in two directions. Facing it, calm waters come from the left, and the right has a small waterfall and swimming hole. To the west, the creek continues downstream.",
+          "entrances":{
+            "east":"Main Creek",
+            "northwest":"Swimming Hole",
+            "southwest":"Shallows"
+          },
+          "exits":{
+            "west":"Main Creek",
+            "southeast":"Swimming Hole",
+            "northeast":"Shallows"
+          }
+        },
+
+        "Shallows":{
+          "description":"You wade through the shallow creek. The bed of the creek is filled with small rocks.",
+          "entrances":{
+            "west":"Dad Pool",
+            "northeast":"Split"
+          },
+          "exits":{
+            "east":"Dad Pool",
+            "southwest":"Split"
+          },
+          "features":{
+            "Skipping Rocks":{
+              "description":"You look at the rocks on the creek bed. They're pretty cool rocks. Very smooth and flat, too.",
+              "actions":[
+                "inspect",
+                "skip a rock"
+              ]
+            }
+          }
+        },
+
+        "Dad Pool":{
+          "description":"As you make your way upstream, you notice parts of the creek get a bit deeper, creating nooks and crannies perfect for something to hide in. There's a bit of creek bank to relax on too.",
+          "entrances":{
+            "east":"Shallows"
+          },
+          "exits":{
+            "west":"Shallows"
+          },
+          "features":{
+            "Skipping Rocks":{
+              "description":"You look at the rocks on the bottom of the creek. They're pretty cool rocks. Very smooth and flat, too.",
+              "actions":[
+                "inspect",
+                "skip a rock"
+              ]
+            },
+            "Big Rock":{
+              "description":"You start to pry a large rock off the bottom... whoa! A crawdad is under it!",
+              "actions":[
+                "inspect"
+              ],
+              "hidden actions":[
+                "grab the crawdad"
+              ]
+            },
+            "Sword Spot":{
+              "description":"sword"
+            }
+          }
+        },
+
+        "Swimming Hole":{
+          "description":"You're at the swimming hole. If you're careful, you can inch around the steep slope, and get to where the water flows in. The bank looks unstable...",
+          "entrances":{
+            "southeast":"Split",
+            "down":"Ledge 1",
+            "out":"Pool"
+          },
+          "exits":{
+            "northwest":"Split",
+            "up":"Ledge 1"
+          }
+        },
+
+        "Ledge 1":{
+          "description":"You carefully shimmy on a narrow outcropping. You can feel the lose dirt slip under your feet. This is risky business.",
+          "entrances":{
+            "up":"Swimming Hole",
+            "down":"Ledge 2"
+          },
+          "exits":{
+            "up":"Ledge 2",
+            "down":"Swimming Hole"
+          }
+        },
+
+        "Ledge 2":{
+          "description":"You keep inching across the steep face of the side of the creek. Be careful not to fall in, one misstep is all it takes...",
+          "entrances":{
+            "up":"Ledge 1"
+          },
+          "exits":{
+            "up":"Top",
+            "down":"Ledge 1"
+          }
+        },
+
+        "Top":{
+          "description":"You made it to the top! Holy cow, the pool is pretty far below you. You look around, but there's no other way up or forward. Guess it's time to go back, and there's only one way down...",
+          "entrances":{
+            "up":"Ledge 2"
+          },
+          "exits":{
+          },
+          "features":{
+            "Ledge":{
+              "description":"ledge for jumping in pool",
+              "actions":[
+                "jump"
+              ]
+            }
+          }
+        },
+
+        "Pool":{
+          "description":"SPLOOSH! You slam through the surface of the water, being pushed below the surface by the force of the waterfall. As you float back to the surface, you open your eyes underwater to see a message scratched on the rocky bottom: \"BRAVE:3889\".",
+          "entrances":{
+          },
+          "exits":{
+            "out":"Swimming Hole"
+          }
+        },
+
+        "Elevator Hall":{
+          "description":"You enter the elevator hallway.",
+          "entrances":{
+            "east":"Elevator",
+            "west":"Main Creek"
+          },
+          "exits":{
+            "west":"Elevator",
+            "east":"Main Creek"
+          }
+        }
+      }
+    },
+
+    "House Floor":{
+      "class_":"normal",
+      "number":9,
+      "rooms":{
+
+        "Entryway":{
+          "description":"You walk into a entryway with a tiled floor. Each tile has a name on it, possibly from a donor that helped contribute to the construction of the building. To the north, a double sliding door, to the east, a door to the rest of the building, to the south, a larger room, possibly for meetings.",
+          "entrances":{
+            "east":"Elevator Hall",
+            "west":"First Floor",
+            "south":"Library",
+            "north":"Foyer"
+            
+          },
+          "exits":{
+            "west":"Elevator Hall",
+            "east":"First Floor",
+            "north":"Library",
+            "south":"Foyer"
+          }
+        },
+
+        "Elevator Hall":{
+          "description":"You enter the elevator hallway.",
+          "entrances":{
+            "east":"Elevator",
+            "west":"Entryway"
+          },
+          "exits":{
+            "west":"Elevator",
+            "east":"Entryway"
+          }
+        },
+
+        "Library":{
+          "description":"The room has a large conference table surrounded by office chairs. Across the table is a trophy case with numerous awards. A plaque is placed next to a cat-shaped urn.",
+          "entrances":{
+            "north":"Entryway"
+          },
+          "exits":{
+            "south":"Entryway"
+          },
+          "features":{
+            "Urn":{
+              "description":"The plaque reads: WE LOVE YOU, BEARCAT",
+              "actions":[
+                "inspect"
+              ]
+            }
+          }
+        },
+
+        "Foyer":{
+          "description":"A large space for meeting. The carpet is old, and reeks of beer. Somehow it feels... wet. The room is sparesly decorated and there's trash from a fast food place on the coffee table.",
+          "entrances":{
+            "south":"Entryway"
+          },
+          "exits":{
+            "north":"Entryway"
+          },
+          "features":{
+            "Piano":{
+              "description":"An old piano. It doesn't work, and there's marks on top, as if people regularly sat on it.",
+              "actions":[
+                "inspect"
+              ]
+            },
+            "Couch":{
+              "description":"You plop on the couch. It's comfortable, but feels dirty. Maybe not best to sit here.",
+              "actions":[
+                "inspect"
+              ]
+            },
+            "Ping Pong Table":{
+              "description":"The ping pong table is folded up, but it looks broken anyway.",
+              "actions":[
+                "inspect"
+              ]
+            },
+            "Window":{
+              "description":"Through a window on the east side you can see a courtyard with a basketball hoop, a fire pit, and a pile of junk. Maybe there's a way down there?",
+              "actions":[
+                "inspect"
+              ]
+            }
+          }
+        },
+
+        "First Floor":{
+          "description":"You walk into a small hallway. To the south are some stairs. Most doors are locked, but at the end of the hall there's a room with \"Buttcrack\" written on the door.",
+          "entrances":{
+            "east":"Entryway",
+            "upstairs":"Basement",
+            "downstairs":"Second Floor",
+            "out of buttcrack":"Buttcrack"
+          },
+          "exits":{
+            "west":"Entryway",
+            "downstairs":"Basement",
+            "upstairs":"Second Floor",
+            "to buttcrack":"Buttcrack"
+          },
+          "features":{
+            "message board":{
+              "description":"It's a calendar. Several events, including birthdays, are on it.",
+              "actions":[
+                "inspect"
+              ]
+            }
+          }
+        },
+
+        "Basement":{
+          "description":"You come into a stuffy basement. There's a kitchen, dining tables, elevated surfaces, party lights and a water machine. Cool air drafts in through a broken window, and large sheets of plywood cover most of the other windows.",
+          "entrances":{
+            "inside":"Courtyard",
+            "downstairs":"First Floor"
+          },
+          "exits":{
+            "upstairs":"First Floor",
+            "outside":"Courtyard"
+          },
+          "features":{
+            "Vending Machine":{
+              "description":"It's a vending machine. A note is written on it: \"As long as there is Grape Fanta, there is hope\". There doesn't appear to be any Grape Fanta left in the machine.",
+              "actions":[
+                "inspect"
+              ]
+            },
+            "Writing":{
+              "description":"There's some writing scratched on the wall behind the water machine: \"If you can read this, you can read\". Clearly this places was inhabited by geniuses.",
+              "actions":[
+                "inspect"
+              ]
+            }
+          },
+          "items":{
+            "Grape Fanta":{
+              "description":"A can of Grape Fanta."
+            }
+          }
+        },
+
+        "Courtyard":{
+          "description":"You walk into a courtyard with a basketball hoop, fire pit, and junk pile. Large tables with 4x8s over them stand on top of mounds of empty cans, and dice can be seen scattered around the yard.",
+          "entrances":{
+            "outside":"Basement"
+          },
+          "exits":{
+            "inside":"Basement"
+          },
+          "features":{
+            "Shovel":{
+              "description":"shovel giver",
+              "hidden actions":[
+                "shovel"
+              ]
+            },
+            "Dice":{
+              "description":"throw dice",
+              "actions":[
+                "toss a die"
+              ]
+            },
+            "Shovel Spot":{
+              "description":"shovel"
+            }
+          }
+        },
+
+        "Second Floor":{
+          "description":"You walk into a small hallway. There's an ATM, and the lights don't seem to be working. Most doors are locked, but at the end of the hall there's two rooms with \"Intensity\" and \"Cave\" written on the doors.",
+          "entrances":{
+            "downstairs":"Third Floor",
+            "upstairs":"First Floor",
+            "out of cave":"Cave",
+            "out of intensity":"Intensity"
+          },
+          "exits":{
+            "upstairs":"Third Floor",
+            "downstairs":"First Floor",
+            "to cave":"Cave",
+            "to intensity":"Intensity"
+          },
+          "features":{
+            "ATM":{
+              "description":"An ATM buried in a closet filled with loose cables. There's no good reason this should be here.",
+              "actions":[
+                "inspect"
+              ]
+            }
+          }
+        },
+
+        "Third Floor":{
+          "description":"You walk into a small hallway. Most doors are locked, but at the end of the hall there's two rooms with \"Lovepit\" and \"Jungle\" written on the doors. There's a portico at the northwest end of hall, but you get the sense something is happening out there you don't want to interrupt...",
+          "entrances":{
+            "upstairs":"Second Floor",
+            "out of lovepit":"Lovepit",
+            "out of jungle":"Jungle"
+          },
+          "exits":{
+            "northwest":"Portico",
+            "downstairs":"Second Floor",
+            "to jungle":"Jungle",
+            "to lovepit":"Lovepit"
+          },
+          "features":{
+            "Bathroom":{
+              "description":"There's a bathroom, but going near it, you see it's swarming with flies, and smells disgusting. No reason to go in there.",
+              "actions":[
+                "inspect"
+              ]
+            }
+          }
+        },
+
+        "Intensity":{
+          "description":"There's a number of bunk beds, and a couch that's visibly stained. Something magic happened here a long time ago.",
+          "entrances":{
+            "to intensity":"Second Floor"
+          },
+          "exits":{
+            "out of intensity":"Second Floor"
+          }
+        },
+
+        "Cave":{
+          "description":"The first part of the room is made of couchs, a shelf, and several fridges. There's no door on the hinge to the back, where there's two sets of bunk beds. Several names have been carved into the blue and white walls.",
+          "entrances":{
+            "to cave":"Second Floor"
+          },
+          "exits":{
+            "out of cave":"Second Floor"
+          }
+        },
+
+        "Jungle":{
+          "description":"There's a big couch set up to look at a TV. The screen is cracked. The whole room smells like... a particular plant.",
+          "entrances":{
+            "to jungle":"Third Floor"
+          },
+          "exits":{
+            "out of jungle":"Third Floor"
+          }
+        },
+
+        "Lovepit":{
+          "description":"The room has a number of beds, a couch, and several beanbags. Dirty magazines and old fast food are laid out on the coffee table.",
+          "entrances":{
+            "to lovepit":"Third Floor"
+          },
+          "exits":{
+            "out of lovepit":"Third Floor"
+          }
+        },
+
+        "Buttcrack":{
+          "description":"Two rooms have their doors open. There's no furnishing, and the floors of both are covered in garbage.",
+          "entrances":{
+            "to buttcrack":"First Floor"
+          },
+          "exits":{
+            "out of buttcrack":"First Floor"
+          },
+          "items":{
+            "Nail Clippers":{
+              "description":"A pair of rusty nail clippers."
+            },
+            "Hanger":{
+              "description":"A plastic hanger."
+            },
+            "Necktie":{
+              "description":"A dirty necktie. It's supposed to be grey, but it's covered in stains."
+            },
+            "Fan":{
+              "description":"It's a fan. Wait, is it like a paper fan you hold in your hand, or an electric fan you put on your desk? Guess you can't tell from reading this, can you?"
+            }
+          }
+        },
+
+        "Portico":{
+          "description":"There's something going on.",
+          "entrances":{
+          },
+          "exits":{
+          }
+        }
+      }
+    },
+
+    "Court":{
+      "class_":"normal",
+      "number":10,
+      "rooms":{
+
+        "Neighborhood":{
+          "description":"As you walk through the door, you step outside into a residential neighborhood. The sun sets on mountains to the east. The house you walked out of is white with black shudders. In the driveway, a silver car is parked haphazardly. There's a basketball hoop on the street, and the mailbox in front of you seems to be at a slant, as if it was hit by something. What a nice place.",
+          "entrances":{
+            "east":"Elevator Hall"
+          },
+          "exits":{
+            "west":"Elevator Hall"
+          }
+        },
+
+        "Elevator Hall":{
+          "description":"You enter the elevator hallway.",
+          "entrances":{
+            "east":"Elevator",
+            "west":"Neighborhood"
+          },
+          "exits":{
+            "west":"Elevator",
+            "east":"Neighborhood"
+          }
+        }
+      }
+    },
+
+    "Rock Pile":{
+      "class_":"normal",
+      "number":11,
+      "rooms":{
+
+        "Hole":{
+          "description":"You seem to be in some kind of cave. You're stuck in a pit. The only light in the room comes from a hole about 10 feet up the wall. There's a pile of rocks beneath, but when you stand on them, you can't quite reach the hole.",
+          "entrances":{
+            "east":"Elevator Hall"
+          },
+          "exits":{
+            "west":"Elevator Hall"
+          },
+          "features":{
+            "Rock Pile":{
+              "description":"A pile of rocks. It's almost tall enough to let you scale up the wall.",
+              "actions":[
+                "stack rocks on the pile"
+              ]
+            },
+            "Crystal":{
+              "description":"hidden crystal"
+            }
+          }
+        },
+
+        "Elevator Hall":{
+          "description":"You enter the elevator hallway.",
+          "entrances":{
+            "east":"Elevator",
+            "west":"Hole"
+          },
+          "exits":{
+            "west":"Elevator",
+            "east":"Hole"
+          }
+        }
+      }
+    },
+
+    "Quiz Floor":{
+      "class_":"normal",
+      "number":12,
+      "rooms":{
+
+        "Quiz Room":{
+          "description":"You walk out of the door and encounter a podium, with a mic faced toward you. On the wall in front of you is various questions to answer, jeopardy style.",
+          "entrances":{
+            "east":"Elevator Hall"
+          },
+          "exits":{
+            "west":"Elevator Hall"
+          },
+          "features":{
+            "Rock Pile":{
+              "description":"A pile of rocks. It's almost tall enough to let you scale up the wall.",
+              "actions":[
+                "stack rocks on the pile"
+              ]
+            },
+            "Crystal":{
+              "description":"hidden crystal"
+            }
+          }
+        },
+
+        "Elevator Hall":{
+          "description":"You enter the elevator hallway.",
+          "entrances":{
+            "east":"Elevator",
+            "west":"Quiz Room"
+          },
+          "exits":{
+            "west":"Elevator",
+            "east":"Quiz Room"
+          }
+        }
+      },
+
+      "Quiz Floor":{
+        "class_":"normal",
+        "number":12,
+        "rooms":{
+  
+          "Quiz Room":{
+            "description":"You walk out of the door and encounter a podium, with a mic faced toward you. On the wall in front of you is various questions to answer, jeopardy style. The mic seems to be on, so anything you say will be treated as an answer to one of the questions.",
+            "entrances":{
+              "east":"Elevator Hall"
+            },
+            "exits":{
+              "west":"Elevator Hall"
+            },
+            "features":{
+              "Fish Question":{
+                "description":"The Latin name of this recently extinct fish species is of the family Scorpaeniformes, which used to inhabit Utah Lakes.",
+                "actions":[
+                  "inspect"
+                ]
+              },
+              "GOAT Question":{
+                "description":"This person is the Melee GOAT. (hint: if you think it's armada, you're a square)",
+                "actions":[
+                  "inspect"
+                ]
+              },
+              "Listener":{
+                "description":"",
+                "hidden actions":[
+                ]
+              }
+            }
+          },
+  
+          "Elevator Hall":{
+            "description":"You enter the elevator hallway.",
+            "entrances":{
+              "east":"Elevator",
+              "west":"Quiz Room"
+            },
+            "exits":{
+              "west":"Elevator",
+              "east":"Quiz Room"
+            }
+          }
+        }
+      },
+
+      "Blank Floor":{
+        "class_":"normal",
+        "number":13,
+        "rooms":{
+  
+          "Room":{
+            "description":"alright. honestly, gonna level with you here. my eyes were a little bigger than my stomach on this one. I thought I was gonna be able to make 100 floors. how insane is that. 100? each designed with some interaction with some other? sheesh. forget it. that being said, feel like I did a pretty ok job all things considered. I'm still churning these things out as best I can, but I can only do so much. so I'm taking a break and making this one easy. there's supposed to be a pepper shaker here, so if there isn't, someone took it already.",
+            "entrances":{
+              "east":"Elevator Hall"
+            },
+            "exits":{
+              "west":"Elevator Hall"
+            },
+            "items":{
+              "Pepper Shaker":{
+                "description":"It's full of pepper."
+              }
+            }
+          },
+  
+          "Elevator Hall":{
+            "description":"You enter the elevator hallway.",
+            "entrances":{
+              "east":"Elevator",
+              "west":"Room"
+            },
+            "exits":{
+              "west":"Elevator",
+              "east":"Room"
+            }
           }
         }
       }

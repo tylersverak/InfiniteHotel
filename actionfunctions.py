@@ -14,6 +14,8 @@ def default(player, args):
 
 def item_default(player, args):
     for value in player.items:
+        print(value.name.lower())
+        print(args)
         if value.name.lower() == args:
             player.send_text(player.name + ' inspected ' + value.name + '. ' + value.description)
             return True
@@ -68,21 +70,12 @@ def speak(player, args):
     player.send_text(player.name + ' said ' + args + ' in ' + player.room.name)
     actions = player.get_action_objects()
     for value in actions.keys():
-        if actions[value].hidden and (args == actions[value].name or actions[value].name == "elevator"):
+        if actions[value].hidden and (args == actions[value].name.lower() or actions[value].name == "elevator"):
             actions[value].use(player, args)
     for value in player.room.players:
         if value != player:
             value.send_text(player.name + " said: " + args)
     return True
-
-# need to update if items have multiple different uses that can be picked from at the same time
-def use_item(player, args):
-    for value in player.items:
-        if value.name.lower() == args:
-            value.actions[0].try_use()
-            return True
-    player.send_text("Hm... you don't seem to have that item... (check your spelling?)")
-    return False
 
 def inspect(player, args):
     features = player.room.features
@@ -106,7 +99,7 @@ def laszewo_room(player, args):
 
 def listen_to_music(player, args):
     player.send_text('Hope you like it!')
-    player.send_text('text player https://open.spotify.com/artist/6jxGLrn1I14RIeRYodOpLN?si=ttpZiyibTiKzoWO4NYjoKA')
+    player.send_text('https://open.spotify.com/artist/6jxGLrn1I14RIeRYodOpLN?si=ttpZiyibTiKzoWO4NYjoKA')
     return True
 
 def elevator_move(player, args):
@@ -183,5 +176,171 @@ def basement_secret(player, args):
     return True
 
 def steer_boat(player, args):
-    player.send_text("You notice the lighthouse in the distant, and steer towards it. You're careful as you get closer to shore and notice a dock where you pull the boat into. ")
+    player.send_text("You notice the lighthouse in the distant, and steer towards it. After a while of sailing, you see the shore, and a dock to pull the boat into. When the boat stops, a small glass orb slides falls out of a compartment and rolls across the boat's deck.")
+    player.room.entrances = {}
+    print(player.room)
+    print(player.room.entrances)
+    new_floor = player.floor.get_room("Elevator").floor_list[5]
+    start_floor = player.floor
+    start_floor.on_exit(player)
+    new_floor.on_entrance(player, room="Boat 2")
+    new_floor.get_room("Dock").entrances["west"] = "Boat 2"
+    new_floor.get_room("Dock").exits["east"] = "Boat 2"
+    return True
+
+def orb(player, args):
+    orb = player.get_item("Sea Orb")
+    if player.floor.name == "Lighthouse Floor" and player.room.name == "Entryway" and orb:
+        player.send_text("You place the orb on the indentation. As it rests there, you look down the telescopic lens into the middle of it. A fog swirls inside the orb. You can faintly make out writing in the orb: \"GUTS=3295\". The orb remains on the apparatus.")
+        player.take_item(orb)
+        player.room.items.append(orb)
+        return True
+    player.send_text("You look into the orb, but the swirling fog obscures your view and you can't see anything useful. You'd need a tool to see inside.")
+    return True
+
+def slot_machine(player, args):
+    luck = random.randint(1, 100)
+    machine = player.room.get_feature("Slot Machine")
+    prizes = player.floor.get_room("Prize Room")
+    if luck == 1:
+        player.send_text("You pull the lever on the machine... It displays: [*][*][*]. Jackpot! The machine's bells are going crazy, and a message is displayed on the machine: \"LUCK:2861\".")
+    elif luck <= 5:
+        shovel = prizes.get_item("Frying Pan")
+        if shovel:
+            prizes.items.remove(shovel)
+            player.send_text("You pull the lever on the machine... It displays: [P][P][P]. You won... a frying pan? The frying pan comes out of the bottom of the machine. Better pick it up fast.")
+            player.room.items.append(shovel)
+        else:
+            player.send_text("You pull the lever on the machine... It displays: [P][P][P]. Looks like you would've won a frying pan, but someone won it already.")
+    elif luck <= 15:
+        lemon = prizes.get_item("Lemon")
+        if lemon:
+            prizes.items.remove(lemon)
+            player.send_text("You pull the lever on the machine... It displays: [L][L][L]. You won... a lemon? The lemon comes out of the bottom of the machine. Better pick it up fast.")
+            player.room.items.append(lemon)
+        else:
+            player.send_text("You pull the lever on the machine... It displays: [L][L][L]. Looks like you would've won a lemon, but someone won it already.")
+    elif luck <= 20:
+        player.send_text("You pull the lever on the machine... It displays: [s][s][s]. You got a drink coupon!\n[take a shot IRL! if you want, I guess...]")
+    else:
+        losing = ["[P]", "[*]", "[s]", "[L]"]
+        choices = [random.randrange(len(losing)), random.randrange(len(losing)), random.randrange(len(losing))]
+        if choices[2] == choices[1]:
+            choices[2] = (choices[2] + 1) % len(losing)
+        player.send_text("You pull the lever on the machine... It displays: " + losing[choices[0]] + losing[choices[1]] + losing[choices[2]] + ". Rats! Try again.")
+    return True
+
+def dig(player, args):
+    if player.room.name == "Dad Pool" and player.floor.name == "Creek Floor":
+        if player.room.get_feature("Sword Spot").description != "nothing":
+            player.send_text("There's something buried here. You dig it up, and find... an awesome sword! Good find.")
+            player.room.get_feature("Sword Spot").description = "nothing"
+            sword_data = {"description":"An awesome sword you dug up in a creek. Truly, does it get any cooler than this?", "actions":["swing"]}
+            player.make_item(sword_data, "Sword")
+        else:
+            player.send_text("Someone's already dug something up here.")
+        return True
+    elif player.room.name == "Hole" and player.floor.name == "Rock Pile":
+        crystal = player.room.get_feature("Crystal")
+        if player.room.get_feature("Crystal") and player.room.get_feature("Crystal").description != "nothing":
+            player.send_text("You start digging and the shovel hits something hard. You keep going, unearthing an awesome semitransparent crystal! I wonder what is does.")
+            player.room.get_feature("Crystal").description = "nothing"
+            crystal_data = {"description":"A crystal you found buried in a cave. It seems to respond to hidden things in the environment.", "actions":["scan"]}
+            player.make_item(crystal_data, "Crystal")
+        else:
+            player.send_text("Someone's already dug something up here.")
+        return True
+    player.send_text("There doesn't appear to be a good spot to dig here... try somewhere else.")
+    return True
+
+def cliff_jump(player, args):
+    if player.room.name != "Top":
+        raise Exception(player.name + " tried to cliffjump somewhere other than top!")
+    new_room = player.floor.get_room("Pool")
+    start_room = player.room
+    start_room.on_exit(player, new_room)
+    new_room.on_entrance(player, start_room)
+    player.send_text("You take two steps back, then... F*** it, time to JUMP!!!")
+    player.set_timeout(3)
+    return True
+
+def skip(player, args):
+    res = ""
+    skips = 1
+    while random.randrange(2) == 0:
+        skips += 1
+    for x in range(1, skips):
+        res += str(x) + "... "
+    if skips == 1:
+        res += "1 skip, that's a dud."
+    elif skips < 4:
+        res += str(skips) + " skips, nice."
+    elif skips < 6:
+        res += str(skips) + " skips! Holy cow."
+    else:
+        res += str(skips) + " SKIPS? ARE YOU OUT OF YOUR MIND? YOU'RE CRACKED AS SHIT!!! [you should actually tell ty you did this, this is impressive]"
+    player.send_text(res)
+    return True
+
+def crawdad(player, args):
+    respond = ("You try to nab it... Ah! Not this time...", "You go for the crawdad... it nips you! Ouch!",
+                "You slowly go for the dad... rats! It barely darted away at the last second.",
+                "You reach for the crawdad... snatched! With perfect form, you get him right behind the claws. Good job! Probably best to let him go now...")
+    index = random.randrange(len(respond))
+    player.send_text(respond[index])
+    return True
+
+def swing(player, self):
+    if player.floor.name == "Great Library" and player.room.name == "Main Room":
+        player.floor.get_room("Office").entrances["upstairs"] = "Main Room"
+        player.send_text("WHOOSH! WHOOSH! You swing the sword around. The sword seems to pull you upstairs, toward the office doors. You put the sword in the keyhole and unlock the office door!")
+        return True
+    player.send_text("WHOOSH! WHOOSH! You swing the sword around. Pretty darn cool.")
+    return True
+
+def toss(player, self):
+    player.send_text("You throw one of the die high into the air, and it comes crashing down on the cement. Not sure where you were aiming with that one.")
+    return True
+
+def shovel(player, self):
+    if player.room.name != "Courtyard" or player.floor.name != "House Floor":
+        raise Exception(player.name + " tried to use shovel outside of house floor")
+    if player.room.get_feature("Shovel Spot").description != "nothing":
+            player.send_text("You sift through the junk pile and find a shovel. Maybe there's a good place to dig somewhere.")
+            player.room.get_feature("Shovel Spot").description = "nothing"
+            shovel_data = {"description":"A shovel you found in a pile of junk.", "actions":["dig"]}
+            player.make_item(shovel_data, "Shovel")
+    else:
+        player.send_text("You look through the junk, but there's no shovel here... someone else must've gotten it.")
+    return True
+
+def scan(player, self):
+    message = "You gaze into the crystal. You feel its energy scan the environment... "
+    for value in player.room.features:
+        if value.hidden_actions != []:
+            player.send_text(message + "the crystal begins to glow with a faint glowing light. Something hidden is nearby.")
+            return True
+    player.send_text(message + "but nothing special happens. Try using it somewhere else.")
+    return True
+
+def pile(player, self):
+    respond = ("You pile rocks on the stack. It starts to look a little bigger! Hopefully that's not just your imagination.",
+                "You throw a few more rocks at the pile. Nothing's changed yet...",
+                "You search the room for more rocks to stack. You find a few, and throw them on the pile.",
+                "More rocks get put onto the stack.",
+                "You add rocks to the pile.",
+                "You toss a rock on the top of the pile.",
+                "Another rock gets added to the pile.",
+                "You put another few rocks on the pile in hopes it will get bigger",
+                "After adding a few more rocks to the stack, you try to scale the wall. You're so close, but not quite able to get out.",
+                "More rocks get added to the pile. Maybe you should keep adding more.",
+                "You add another rock. Each rock has to make the pile bigger, right?",
+                "You find a lot of rocks, and careful add each one to the pile. You can't quite reach the hole, but a few more really ought to be enough.")
+    index = random.randrange(len(respond))
+    player.send_text(respond[index])
+    return True
+
+def question_listener(player, args):
+    if args == "what is a cottus echinatus" or args == "what is cottus echinatus":
+        print('s')
     return True

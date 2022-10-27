@@ -7,11 +7,17 @@ from room import Room
 from item import Item
 from datetime import datetime
 from datetime import timedelta
+from inboundsms import host
+
+# instructions- run web server for receiving texts, then run 'ngrok http 5000' cause webserver default is 5000 and then you
+# gotta put ngrok url in the API
 
 floor_list = {}
 # if given pre commands like this, make sure they are right or it will cause weird errors
 #received_texts = [(2, "go west"), (2, "go west"), (2, "speak 5"), (2, "go east"), (2, "go east"), (2, "go upstairs"), (2, "go upstairs"), (2, "go upstairs"),(2, "flip"),
-#(2, "go downstairs"), (2, "go downstairs"), (2, "go downstairs"), (2, "go west"), (2, "go west"), (2, "speak 4"), (2, "go east"), (2, "go east")]
+#(2, "go downstairs"), (2, "go downstairs"), (2, "go downstairs"), (2, "go west"), (2, "go west"), (2, "speak 4"), (2, "go east"), (2, "go east")] #lighthouse
+#received_texts = [(2, "go west"), (2, "go west"), (2, "speak 9"), (2, "go east"), (2, "go east"), (2, "go east"), (2, "go downstairs"), (2, "go outside"), (2, "shovel"),
+#(2, "go inside"), (2, "go upstairs"), (2, "go west"), (2, "go west"), (2, "go west"), (2, "speak 11"), (2, "go east"), (2, "go east")] #lighthouse
 received_texts = [(2, "go west"), (2, "go west")]
 RUNNNING = False
 STARTING_FLOOR = 1
@@ -45,7 +51,7 @@ def create_elevator():
     elevator.floor_list = floor_list
 
 def get_text(phone_number):
-    bad_chars = [')', '(', '"'] # not sure if necessary
+    bad_chars = [')', '(', '"', '?'] # not sure if necessary
     for value in received_texts:
         if value[0] == phone_number:
             received_texts.remove(value)
@@ -97,6 +103,9 @@ def main():
         floor_list[STARTING_FLOOR].on_entrance(sample_player2, STARTING_ROOM)
         sample_player2.update_actions()
         master_player_set.append(sample_player2)
+    dprint('Starting server...')
+    host()
+    dprint('Server running on localhost!')
     dprint('Game Ready!\n')
 
     RUNNING = True
@@ -151,4 +160,8 @@ to a specific floor, then 40 or so floors that can be accessed either with their
 will be hashed to be unique and modulo'd back to a range that's workable.
 Hidden actions need something to stop them from having behavior when someone speaks, but still needs to be able to
 trigger when someone says the right thing.
+get rid of flags
+PLAN
+15 rooms,
+so 1 today 1 tomorrow 4 wednesday 3 thursday
 """

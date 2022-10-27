@@ -2,13 +2,17 @@ import types
 import actionfunctions
 
 
-func_dict = {"go":actionfunctions.go_to, "def":actionfunctions.default, "speak":actionfunctions.speak, "use":actionfunctions.item_default,
-             "pickup":actionfunctions.item_pickup, "drop":actionfunctions.item_dropoff, "itemdefault":actionfunctions.item_default,
-             "inspect":actionfunctions.inspect, "open laszewo room":actionfunctions.laszewo_room, 
+func_dict = {"go":actionfunctions.go_to, "def":actionfunctions.default, "speak":actionfunctions.speak, "examine":actionfunctions.item_default,
+             "pickup":actionfunctions.item_pickup, "drop":actionfunctions.item_dropoff,
+             "inspect":actionfunctions.inspect, "Laszewo":actionfunctions.laszewo_room, 
              "listen to music":actionfunctions.listen_to_music, "elevator":actionfunctions.elevator_move, "read random book":actionfunctions.random_book,
              "play piano notes":actionfunctions.play_notes, "pull advanced guide 5":actionfunctions.basement_secret,
-             "flip power switch":actionfunctions.lighthouse_switch, "steer toward shore":actionfunctions.steer_boat}
-param_set = set(("go", "speak", "use", "inspect", "drop", "pickup", "elevator", "play piano notes"))
+             "flip power switch":actionfunctions.lighthouse_switch, "steer toward shore":actionfunctions.steer_boat,
+             "orb":actionfunctions.orb, "pull machine lever":actionfunctions.slot_machine, "dig":actionfunctions.dig, "jump":actionfunctions.cliff_jump,
+             "grab the crawdad":actionfunctions.crawdad, "skip a rock":actionfunctions.skip, "swing":actionfunctions.swing,
+             "toss a die":actionfunctions.toss, "shovel":actionfunctions.shovel, "scan":actionfunctions.scan,
+             "stack rocks on the pile":actionfunctions.pile, "What is a cottus echinatus":actionfunctions.question_listener}
+param_set = set(("go", "speak", "examine", "inspect", "drop", "pickup", "elevator", "play piano notes"))
 
 class Action():
 
@@ -46,14 +50,14 @@ class Action():
         else:
             return self.use(player, args)
 
-    def get_command_name(self, player):
+    def get_command_name(self, player, parameters):
         res = "> "
         if self.name == "go":
             res += "GO * "
             for value in player.room.exits: # assumes room has at least one exit, which it should
                 res += value + ", "
             return res[:-2]
-        elif self.name == "use" or self.name == "drop":
+        elif self.name == "examine" or self.name == "drop":
             res += self.name.upper() + " * "
             for value in player.items:
                 res += value.name + ", "
@@ -75,6 +79,8 @@ class Action():
         else:
             temp_str = self.name.split()
             temp_str[0] = temp_str[0].upper()
+            if parameters:
+                temp_str[0] += ' *'
             res += " ".join(temp_str)
             return res
 

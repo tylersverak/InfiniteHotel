@@ -42,6 +42,18 @@ class Room:
                 temp_actions.extend(entity.get_actions())
         return temp_actions
 
+    def get_feature(self, name):
+        for value in self.features:
+            if value.name == name:
+                return value
+        return None
+
+    def get_item(self, name):
+        for value in self.items:
+            if value.name == name:
+                return value
+        return None
+
     def get_flags(self):
         return self.flags
 
@@ -51,8 +63,12 @@ class Room:
             player.set_timeout(5)
         player.room = None
         self.players.remove(player)
+        for value in self.players:
+            value.send_text(player.name + " left.")
 
     def on_entrance(self, player, from_room):
+        for value in self.players:
+            value.send_text(player.name + " entered.")
         player.room = self
         self.players.add(player)
 
