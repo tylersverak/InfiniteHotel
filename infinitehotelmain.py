@@ -24,10 +24,14 @@ master_player_list = {}
 RUNNNING = False
 STARTING_FLOOR = 1
 STARTING_ROOM = "Lobby"
+LOG_NAME = None
 MULTIPLAYER = False # experimental, but should be relatively stable
 
 def dprint(text):
     print("[DEBUG] " + str(text))
+    log = open(LOG_NAME,"a")
+    log.write("[DEBUG] " + str(text))
+    log.close()
 
 def add_text(text):
     received_texts.append(text)
@@ -55,6 +59,18 @@ def initialize_floors():
             floor_list[temp_floor.number] = temp_floor
             dprint(temp_floor.get_rooms())
     dprint('Initializing floors complete.')
+
+def create_log():
+    date = str(datetime.now())
+    index = date.find(".")
+    date = date[:index]
+    date = date.replace(':', "-")
+    global LOG_NAME
+    LOG_NAME = "logs/log " + date + ".txt"
+    log = open(LOG_NAME,"a")
+    log.write("Game from " + date + "\n**************************BEGIN**************************")
+    log.close()
+
 
 def create_elevator():
     elevator_data = {"description":"You're in the elevator. It seems to be waiting for you to say a command...",
@@ -93,6 +109,8 @@ def give_feedback(player, action_from_player):
     print('worked begu')
 
 def hotelmain():
+    # need to create log first to capture all activity
+    create_log()
     dprint('Starting...')
     initialize_floors()
     create_elevator()
