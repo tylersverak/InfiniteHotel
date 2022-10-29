@@ -32,7 +32,6 @@ class Room:
         item_holder = room_dump.get("items")
         if item_holder:
             for value in item_holder:
-                print(item_holder[value])
                 self.items.append(Item(item_holder[value], value)) # STILL NEED TO HANDLE FINDING ITEMS
 
     def get_actions(self):
@@ -67,6 +66,8 @@ class Room:
             value.send_text(player.name + " left.")
 
     def on_entrance(self, player, from_room):
+        if len(self.players) > 0:
+            player.send_text('The players in this room are: ' + str(self.players))
         for value in self.players:
             value.send_text(player.name + " entered.")
         player.room = self

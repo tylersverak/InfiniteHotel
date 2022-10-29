@@ -3,6 +3,8 @@ from datetime import timedelta
 from action import Action
 from feature import Feature
 from item import Item
+from twiliotext import send_twilio_text
+import textwrap
 
 class Player:
 
@@ -102,7 +104,12 @@ class Player:
             self.actions.remove(self.use_action)
 
     def send_text(self, message):
-        # send_twilio_text("[" + self.name + "]: " + message) # twilio account got no money in it lol
+        if len(message) > 1500:
+            chunks = textwrap.wrap(message, 1500)
+            for value in chunks:
+                send_twilio_text(value, to_num = self.phone_number)
+        else:
+            send_twilio_text(message, to_num = self.phone_number) 
         print("[" + self.name + "]: " + message) # change to sending text later
 
 

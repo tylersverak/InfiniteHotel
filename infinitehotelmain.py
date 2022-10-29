@@ -1,3 +1,4 @@
+from doctest import master
 import json
 from math import floor
 from random import sample
@@ -7,7 +8,7 @@ from room import Room
 from item import Item
 from datetime import datetime
 from datetime import timedelta
-from inboundsms import host
+import time
 
 # instructions- run web server for receiving texts, then run 'ngrok http 5000' cause webserver default is 5000 and then you
 # gotta put ngrok url in the API
@@ -18,15 +19,29 @@ floor_list = {}
 #(2, "go downstairs"), (2, "go downstairs"), (2, "go downstairs"), (2, "go west"), (2, "go west"), (2, "speak 4"), (2, "go east"), (2, "go east")] #lighthouse
 #received_texts = [(2, "go west"), (2, "go west"), (2, "speak 9"), (2, "go east"), (2, "go east"), (2, "go east"), (2, "go downstairs"), (2, "go outside"), (2, "shovel"),
 #(2, "go inside"), (2, "go upstairs"), (2, "go west"), (2, "go west"), (2, "go west"), (2, "speak 11"), (2, "go east"), (2, "go east")] #lighthouse
-received_texts = [(2, "go west"), (2, "go west")]
+received_texts = []
+master_player_list = {}
 RUNNNING = False
 STARTING_FLOOR = 1
 STARTING_ROOM = "Lobby"
 MULTIPLAYER = False # experimental, but should be relatively stable
 
 def dprint(text):
-    pass
-        #print("[DEBUG] " + str(text))
+    print("[DEBUG] " + str(text))
+
+def add_text(text):
+    received_texts.append(text)
+    print(received_texts)
+
+def add_player(name, number):
+    temp_player = {}
+    temp_player['name'] = name
+    temp_player['phone_number'] = number
+    temp_player['starting_items'] = []
+    p = Player(temp_player)
+    floor_list[STARTING_FLOOR].on_entrance(p, STARTING_ROOM)
+    p.update_actions()
+    master_player_list[number] = p
 
 def initialize_floors():
     dprint('Initializing floors...')
@@ -50,79 +65,52 @@ def create_elevator():
         floor_list[value].rooms['Elevator'] = elevator
     elevator.floor_list = floor_list
 
-def get_text(phone_number):
+def filter_action(command):
     bad_chars = [')', '(', '"', '?'] # not sure if necessary
-    for value in received_texts:
-        if value[0] == phone_number:
-            received_texts.remove(value)
-            command = value[1].strip().lower()
-            if command == '':
-                return None
-            if command[-1] == '.':
-                command = command[:-1]
-            for char in bad_chars:
-                command = command.replace(char, '')
-            return command
-    return None
+    command = command.strip().lower()
+    if command == '':
+        return None
+    if command[-1] == '.':
+        command = command[:-1]
+    for char in bad_chars:
+        command = command.replace(char, '')
+    return command
 
-def give_feedback(player):
-    feedback = get_text(player.phone_number)
-    if feedback:
-        if feedback == "quit" or feedback == "q": # remove when not needed for debugging
-            return False
-        if len(feedback) > 0:
-            actions = player.get_actions()
-            index = feedback.find(' ')
-            if feedback.split()[0] in actions:
-                if index < 0:
-                    player.do_action(feedback, "")
-                else:
-                    player.do_action(feedback[:index], feedback[index + 1:])
+def give_feedback(player, action_from_player):
+    if len(action_from_player) > 0:
+        action_from_player = filter_action(action_from_player)
+        actions = player.get_actions()
+        index = action_from_player.find(' ')
+        if action_from_player.split()[0] in actions:
+            if index < 0:
+                player.do_action(action_from_player, "")
             else:
-                print('not a valid option, please try again') # change this to texting the player
+                player.do_action(action_from_player[:index], action_from_player[index + 1:])
         else:
-            print('your choice was blank, please try again') # change this to texting the player
-    
-    return True
+            print('not a valid option, please try again') # change this to texting the player
+    else:
+        print('your choice was blank, please try again') # change this to texting the player
+    print('worked begu')
 
-def main():
+def hotelmain():
     dprint('Starting...')
     initialize_floors()
     create_elevator()
-    master_player_set = []
-    notedata = {"description":"a note left by ty", "actions":[]}
-    note = Item(notedata, "Ty's Note")
-    pdata= {"name":"Ty", "phone_number":2, "starting_items":[note]}
-    sample_player = Player(pdata)
-    floor_list[STARTING_FLOOR].on_entrance(sample_player, STARTING_ROOM)
-    sample_player.update_actions()
-    master_player_set.append(sample_player)
-    if MULTIPLAYER:
-        pdata2= {"name":"Dark Ty", "phone_number":3, "starting_items":[]}
-        sample_player2 = Player(pdata2)
-        floor_list[STARTING_FLOOR].on_entrance(sample_player2, STARTING_ROOM)
-        sample_player2.update_actions()
-        master_player_set.append(sample_player2)
-    dprint('Starting server...')
-    host()
-    dprint('Server running on localhost!')
     dprint('Game Ready!\n')
 
     RUNNING = True
     while (RUNNING):
-        dprint("            $$$$$$$$$$$$$$$NEW TURN$$$$$$$$$$$$$$$")
-        dprint(floor_list[4].get_room("Main Deck").features[0].actions[0].enabled)
-        for player in master_player_set:
-            if player.timeout <= datetime.now():
-                if (RUNNING and player.notified): # remove when not needed for debugging
-                    received_texts.append((player.phone_number, input()))
-                    print()
-                if not player.notified:
-                    dprint(player)
-                    player.send_info_text()
-                    print(player.name)
-                # here you would check if a text was received, but for now we use input
-                RUNNING = give_feedback(player) and RUNNING
+            #dprint("            $$$$$$$$$$$$$$$NEW TURN$$$$$$$$$$$$$$$")
+            for value in received_texts:
+                player = master_player_list.get(value[1])
+                if player and player.timeout <= datetime.now():
+                    give_feedback(player, value[0])
+                    if not player.notified:
+                        dprint(player)
+                        player.send_info_text()
+                        print(player.name)
+                    received_texts.remove(value)
+            time.sleep(1)
     dprint(floor_list)
     '''
     while (game running):
@@ -139,7 +127,7 @@ def main():
     dprint("Sucessfully finished!")
 
 if __name__ == "__main__":
-    main()
+    pass#hotelmain()
 
 
 """
@@ -164,4 +152,9 @@ get rid of flags
 PLAN
 15 rooms,
 so 1 today 1 tomorrow 4 wednesday 3 thursday
+infinity symbol
+more obvious directions
+take debug stuff out of texts, also out of go
+have things recorded to txt file
+elevator kick people out
 """
