@@ -1635,7 +1635,7 @@
           "features":{
             
             "Phone":{
-              "description":"It's an old rotary phone. Next to the phone is a note with a phone number on it. Give it a ring.\n\n9255968020",
+              "description":"It's an old rotary phone. Next to the phone is a note with a phone number on it. Give it a ring. Be sure to tell him you've made it.\n\n9255968020",
               "actions":[
                 "inspect"
               ]
