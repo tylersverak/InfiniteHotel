@@ -5,6 +5,9 @@ from infinitehotelmain import hotelmain, add_text, add_player
 import threading
 import time
 
+# instructions- run web server for receiving texts, then run 'ngrok http 5000' cause webserver default is 5000 and then you
+# gotta put ngrok url in the API
+
 players = {}
 data = []
 

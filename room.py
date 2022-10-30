@@ -41,6 +41,9 @@ class Room:
                 temp_actions.extend(entity.get_actions())
         return temp_actions
 
+    def get_players(self):
+        return self.players
+
     def get_feature(self, name):
         for value in self.features:
             if value.name == name:

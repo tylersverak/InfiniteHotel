@@ -9,9 +9,8 @@ from item import Item
 from datetime import datetime
 from datetime import timedelta
 import time
+import actionfunctions
 
-# instructions- run web server for receiving texts, then run 'ngrok http 5000' cause webserver default is 5000 and then you
-# gotta put ngrok url in the API
 
 floor_list = {}
 # if given pre commands like this, make sure they are right or it will cause weird errors
@@ -29,9 +28,10 @@ MULTIPLAYER = False # experimental, but should be relatively stable
 
 def dprint(text):
     print("[DEBUG] " + str(text))
+    global LOG_NAME
     log = open(LOG_NAME,"a")
-    log.write("[DEBUG] " + str(text))
-    log.close()
+    log.write("[DEBUG] " + str(text) + '\n')
+    log.flush()
 
 def add_text(text):
     received_texts.append(text)
@@ -69,17 +69,18 @@ def create_log():
     LOG_NAME = "logs/log " + date + ".txt"
     log = open(LOG_NAME,"a")
     log.write("Game from " + date + "\n**************************BEGIN**************************")
-    log.close()
+    log.flush()
 
 
 def create_elevator():
-    elevator_data = {"description":"You're in the elevator. It seems to be waiting for you to say a command...",
+    elevator_data = {"description":"You're in the elevator. It seems to be waiting for you to say a floor number...",
                 "entrances":{"west":"Elevator Hall"}, "exits":{"east":"Elevator Hall"},
                 "features":{"elevatorlistener":{"description":"Listener for elevator", "hidden actions":["elevator"]}}}
     elevator = Room(elevator_data, "Elevator", 0)
     for value in floor_list.keys():
         floor_list[value].rooms['Elevator'] = elevator
     elevator.floor_list = floor_list
+    return elevator
 
 def filter_action(command):
     bad_chars = [')', '(', '"', '?'] # not sure if necessary
@@ -106,19 +107,30 @@ def give_feedback(player, action_from_player):
             print('not a valid option, please try again') # change this to texting the player
     else:
         print('your choice was blank, please try again') # change this to texting the player
-    print('worked begu')
 
 def hotelmain():
     # need to create log first to capture all activity
     create_log()
     dprint('Starting...')
     initialize_floors()
-    create_elevator()
+    elevator = create_elevator()
+    elevator_timer = None
     dprint('Game Ready!\n')
 
     RUNNING = True
     while (RUNNING):
-            #dprint("            $$$$$$$$$$$$$$$NEW TURN$$$$$$$$$$$$$$$")
+            if elevator.player_count() > 0:
+                if elevator_timer and elevator_timer + timedelta(seconds = 20) < datetime.now():
+                    temp = list(elevator.get_players())
+                    for value in temp:
+                        value.send_text("The magic elevator threw you out because you were in there for more than 20 seconds!")
+                        actionfunctions.go_to(value, "east")
+                        value.send_info_text()
+                    elevator_timer = None
+                elif not elevator_timer:
+                    elevator_timer = datetime.now()
+            else:
+                elevator_timer = None
             for value in received_texts:
                 player = master_player_list.get(value[1])
                 if player and player.timeout <= datetime.now():
@@ -126,9 +138,8 @@ def hotelmain():
                     if not player.notified:
                         dprint(player)
                         player.send_info_text()
-                        print(player.name)
+                        dprint(player.name)
                     received_texts.remove(value)
-            time.sleep(1)
     dprint(floor_list)
     '''
     while (game running):

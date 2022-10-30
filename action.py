@@ -11,7 +11,11 @@ func_dict = {"go":actionfunctions.go_to, "def":actionfunctions.default, "speak":
              "orb":actionfunctions.orb, "pull machine lever":actionfunctions.slot_machine, "dig":actionfunctions.dig, "jump":actionfunctions.cliff_jump,
              "grab the crawdad":actionfunctions.crawdad, "skip a rock":actionfunctions.skip, "swing":actionfunctions.swing,
              "toss a die":actionfunctions.toss, "shovel":actionfunctions.shovel, "scan":actionfunctions.scan,
-             "stack rocks on the pile":actionfunctions.pile, "What is a cottus echinatus":actionfunctions.question_listener}
+             "stack rocks on the pile":actionfunctions.pile, "What is a cottus echinatus":actionfunctions.question_listener,
+             "Mango":actionfunctions.question_listener, "Beer":actionfunctions.question_listener, "Orange Chicken":actionfunctions.question_listener,
+             "1.8m":actionfunctions.question_listener, "Cow":actionfunctions.question_listener, "6430":actionfunctions.vault1,
+             "5007":actionfunctions.vault2, "1349":actionfunctions.vault3, "3295":actionfunctions.vault4, "2487":actionfunctions.vault5,
+             "2861":actionfunctions.vault6, "3889":actionfunctions.vault7}
 param_set = set(("go", "speak", "examine", "inspect", "drop", "pickup", "elevator", "play piano notes"))
 
 class Action():

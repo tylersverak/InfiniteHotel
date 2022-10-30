@@ -86,7 +86,7 @@ class Player:
                 message += action.get_command_name(self, action.parameters) + '\n'
         message += 'What do you choose to do?' # maybe for debugging only
         self.notified = True
-        self.send_text("[DEBUG] " + self.name + ' got sent: \n' + message)
+        self.send_text(message)
 
     def give_item(self, item):
         if len(self.items) == 0:

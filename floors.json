@@ -117,7 +117,7 @@
         },
         "items":{
           "Treasure Map":{
-            "description":"It's a guide to treasure! There's several sections with dotted lines leading to a big X. There's directions written on the back in sloppy handwriting: \"hey cool you found a map. lets see how well you can read. first thing first you gotta get out of the basement which is easy. second you gotta go find a big run down house, should have a few floors, anyways go to the basement then the courtyard then type 'shovel' (without the single quotes, obviously). thirdly, once you have the shovel, go find the creek, follow the creek and when it splits, go northeast, and follow that to the end, where you should dig with the shovel. fourth, come back here to the library (floor 0), and swing the thing you found buried in the creek in the main room.\""
+            "description":"It's a guide to treasure! It reads: \"you gotta go find a big run down house, should have a few floors, anyways go to the basement then the courtyard then type 'shovel' (without the single quotes, obviously). once you have the shovel, go find the creek, follow the creek and when it splits, go northeast, and follow that to the end, where you should dig with the shovel. come back here to the library (floor 0), and swing the thing you found buried in the creek in the main room.\""
           }
         }
       },
@@ -178,7 +178,7 @@
     "rooms":{
 
       "Main Hall":{
-        "description":"You're in a small hallway. There's a bunch of numbered hotel rooms, and at the East end there is a large lobby with a handful of ammenities. At the West end, a mysterious elevator with a sign next to it. The sign has some instructions about the elevator, and there's a dial above the elevator to indicate what floor the elevator is on. On one end of the dial has a 0, the other has a ∞.",
+        "description":"You're in a small hallway. There's a bunch of numbered hotel rooms, and at the east end there is a large lobby with a handful of ammenities. At the west end, a mysterious elevator. There's a dial above the elevator to indicate what floor the elevator is on. On one end of the dial has a 0, the other has an infinity symbol.",
         "entrances":{
           "west":"Lobby",
           "east" : "Elevator",
@@ -1215,7 +1215,7 @@
       "rooms":{
 
         "Quiz Room":{
-          "description":"You walk out of the door and encounter a podium, with a mic faced toward you. On the wall in front of you is various questions to answer, jeopardy style.",
+          "description":"You walk out of the door and encounter a podium, with a mic faced toward you. On the wall in front of you is various questions to answer. Simply use SPEAK to say the answer out loud. No harm in guessing.",
           "entrances":{
             "east":"Elevator Hall"
           },
@@ -1223,14 +1223,45 @@
             "west":"Elevator Hall"
           },
           "features":{
-            "Rock Pile":{
-              "description":"A pile of rocks. It's almost tall enough to let you scale up the wall.",
+            "Liquid Question":{
+              "description":"This liquid is vital to human life. Ty drinks it all the time. What is it?",
               "actions":[
-                "stack rocks on the pile"
+                "inspect"
               ]
             },
-            "Crystal":{
-              "description":"hidden crystal"
+            "GOAT question":{
+              "description":"Who is the Melee GOAT? (hint: if you think it's armada, you're a square)",
+              "actions":[
+                "inspect"
+              ]
+            },
+            "Koi Question":{
+              "description":"How much money was the most expensive koi ever sold worth? Pick from the following.\n112k\n55k\n871k\n1.8m",
+              "actions":[
+                "inspect"
+              ]
+            },
+            "SAP Question":{
+              "description":"In super auto pets, which pet puts two Milk items in the shop when bought?",
+              "actions":[
+                "inspect"
+              ]
+            },
+            "Panda Question":{
+              "description":"At Panda Express, there is only one entree you should ever order. What is it?",
+              "actions":[
+                "inspect"
+              ]
+            },
+            "Listener":{
+              "description":"",
+              "hidden actions":[
+                "Mango",
+                "Beer",
+                "Orange Chicken",
+                "1.8m",
+                "Cow"
+              ]
             }
           }
         },
@@ -1246,90 +1277,386 @@
             "east":"Quiz Room"
           }
         }
-      },
+      }
+    },
 
-      "Quiz Floor":{
-        "class_":"normal",
-        "number":12,
-        "rooms":{
-  
-          "Quiz Room":{
-            "description":"You walk out of the door and encounter a podium, with a mic faced toward you. On the wall in front of you is various questions to answer, jeopardy style. The mic seems to be on, so anything you say will be treated as an answer to one of the questions.",
-            "entrances":{
-              "east":"Elevator Hall"
-            },
-            "exits":{
-              "west":"Elevator Hall"
-            },
-            "features":{
-              "Fish Question":{
-                "description":"The Latin name of this recently extinct fish species is of the family Scorpaeniformes, which used to inhabit Utah Lakes.",
-                "actions":[
-                  "inspect"
-                ]
-              },
-              "GOAT Question":{
-                "description":"This person is the Melee GOAT. (hint: if you think it's armada, you're a square)",
-                "actions":[
-                  "inspect"
-                ]
-              },
-              "Listener":{
-                "description":"",
-                "hidden actions":[
-                ]
-              }
-            }
+    "Blank Floor":{
+      "class_":"normal",
+      "number":13,
+      "rooms":{
+
+        "Room":{
+          "description":"alright. honestly, gonna level with you here. my eyes were a little bigger than my stomach on this one. I thought I was gonna be able to make 100 floors. how insane is that. 100? each designed with some interaction with some other? sheesh. forget it. that being said, feel like I did a pretty ok job all things considered. I'm still churning these things out as best I can, but I can only do so much. so I'm taking a break and making this one easy. there's supposed to be a pepper shaker here, so if there isn't, someone took it already.",
+          "entrances":{
+            "east":"Elevator Hall"
           },
-  
-          "Elevator Hall":{
-            "description":"You enter the elevator hallway.",
-            "entrances":{
-              "east":"Elevator",
-              "west":"Quiz Room"
-            },
-            "exits":{
-              "west":"Elevator",
-              "east":"Quiz Room"
+          "exits":{
+            "west":"Elevator Hall"
+          },
+          "items":{
+            "Pepper Shaker":{
+              "description":"It's full of pepper."
             }
           }
-        }
-      },
+        },
 
-      "Blank Floor":{
-        "class_":"normal",
-        "number":13,
-        "rooms":{
-  
-          "Room":{
-            "description":"alright. honestly, gonna level with you here. my eyes were a little bigger than my stomach on this one. I thought I was gonna be able to make 100 floors. how insane is that. 100? each designed with some interaction with some other? sheesh. forget it. that being said, feel like I did a pretty ok job all things considered. I'm still churning these things out as best I can, but I can only do so much. so I'm taking a break and making this one easy. there's supposed to be a pepper shaker here, so if there isn't, someone took it already.",
-            "entrances":{
-              "east":"Elevator Hall"
-            },
-            "exits":{
-              "west":"Elevator Hall"
-            },
-            "items":{
-              "Pepper Shaker":{
-                "description":"It's full of pepper."
-              }
-            }
+        "Elevator Hall":{
+          "description":"You enter the elevator hallway.",
+          "entrances":{
+            "east":"Elevator",
+            "west":"Room"
           },
+          "exits":{
+            "west":"Elevator",
+            "east":"Room"
+          }
+        }
+      }
+    },
+
+    "Coast Floor":{
+      "class_":"normal",
+      "number":14,
+      "rooms":{
   
-          "Elevator Hall":{
-            "description":"You enter the elevator hallway.",
-            "entrances":{
-              "east":"Elevator",
-              "west":"Room"
-            },
-            "exits":{
-              "west":"Elevator",
-              "east":"Room"
+        "Main Room":{
+          "description":"You step into a cave made of beautiful stone. The color of the rocks fade from pink to yellow to red to orange. To the north, a seasalt breeze comes in from an opening in the cave. To the south, the cave gets dark.",
+          "entrances":{
+            "east":"Elevator Hall",
+            "south":"Mouth",
+            "north":"Maze 1"
+          },
+          "exits":{
+            "west":"Elevator Hall",
+            "north":"Mouth",
+            "south":"Maze 1"
+          }
+        },
+
+        "Maze 1":{
+          "description":"There's a stack of 3 stones. Each stone is cut from the same gorgeous rock the cave is made of, but perfectly polished to be round. Funny... feels like you've been here before.",
+          "entrances":{
+            "south":"Main Room",
+            "north":"Maze 9",
+            "southwest":"Maze 5",
+            "west":"Maze 4",
+            "northwest":"Maze 2"
+          },
+          "exits":{
+            "north":"Main Room",
+            "east":"Maze 6",
+            "west":"Maze 2"
+          }
+        },
+
+        "Maze 2":{
+          "description":"There's a stack of 2 stones. You're almost certain you've been here before.",
+          "entrances":{
+            "east":"Maze 8",
+            "south":"Maze 3",
+            "west":"Maze 1"
+          },
+          "exits":{
+            "west":"Maze 5",
+            "northwest":"Maze 1"
+          }
+        },
+
+        "Maze 3":{
+          "description":"There's 3 stones all set next to each other. You can't remember which direction you came from.",
+          "entrances":{
+            "west":"Maze 6"
+          },
+          "exits":{
+            "south":"Maze 2",
+            "northwest":"Maze 4"
+          }
+        },
+
+        "Maze 4":{
+          "description":"There's a stack of 4 stones. It's a dead end.",
+          "entrances":{
+            "west":"Maze 8",
+            "northwest":"Maze 3"
+          },
+          "exits":{
+            "west":"Maze 1"
+          }
+        },
+
+        "Maze 5":{
+          "description":"There's a stack of 2 stones, and a stack of 3 next to it. You feel as if you've lost your sense of direction.",
+          "entrances":{
+            "west":"Maze 2"
+          },
+          "exits":{
+            "north":"Maze 7",
+            "southwest":"Maze 1"
+          }
+        },
+
+        "Maze 6":{
+          "description":"6 rocks are on the ground in a circle. This looks too familiar... yet it's also a dead end.",
+          "entrances":{
+            "north":"Maze 8",
+            "northeast":"Maze 7",
+            "east":"Maze 1"
+          },
+          "exits":{
+            "west":"Maze 3"
+          }
+        },
+
+        "Maze 7":{
+          "description":"There's a stack of 4 and 3 stones. The orange and pink hues of the fall can faintly be seen.",
+          "entrances":{
+            "north":"Maze 5"
+          },
+          "exits":{
+            "northeast":"Maze 6",
+            "south":"Maze 8"
+          }
+        },
+
+        "Maze 8":{
+          "description":"There's 2 stacks of 4 stones each. Both stacks are the same height. The room is made of the same stone material.",
+          "entrances":{
+            "south":"Maze 7"
+          },
+          "exits":{
+            "north":"Maze 6",
+            "east":"Maze 2",
+            "west":"Maze 4",
+            "south":"Maze 9"
+          }
+        },
+
+        "Maze 9":{
+          "description":"This room feels odd. There's a message carved into the stone wall.",
+          "entrances":{
+            "south":"Maze 8"
+          },
+          "exits":{
+            "north":"Maze 1"
+          },
+          "features":{
+          
+            "Wall Carving":{
+              "description":"The carving in the stone reads: \"TACTICS:2487\".",
+              "actions":[
+                  "inspect"
+              ]
             }
+          }
+        },
+
+        "Mouth":{
+          "description":"The mouth of the cave gives way to a 50ft drop into the ocean. The sun is setting, and the water shimmers beautifully.",
+          "entrances":{
+            "north":"Elevator Hall"
+          },
+          "exits":{
+            "south":"Elevator Hall"
+          },
+          "features":{
+            
+            "Feature Name":{
+              "description":"description of feature",
+              "actions":[
+                  "name of action (needs to already exist in the code)"
+              ],
+              "hidden actions":[
+                "see above but not listed initially"
+              ]
+            }
+          }
+        },
+  
+        "Elevator Hall":{
+          "description":"You enter the elevator hallway.",
+          "entrances":{
+            "east":"Elevator",
+            "west":"Main Room"
+          },
+          "exits":{
+            "west":"Elevator",
+            "east":"Main Room"
+          }
+        }
+      }
+    },
+
+    "Vault":{
+      "class_":"normal",
+      "number":15,
+      "rooms":{
+  
+        "Ability Room":{
+          "description":"You've come to a large vault. Over the door is written \"ABILITY\".",
+          "entrances":{
+            "east":"Elevator Hall",
+            "west":"Spirits Room"
+          },
+          "exits":{
+            "west":"Elevator Hall"
+          },
+          "features":{
+            
+            "Listener":{
+              "description":"listener",
+              "hidden actions":[
+                "6430"
+              ]
+            }
+          }
+        },
+        
+        "Spirits Room":{
+          "description":"You've come to a large vault. Over the door is written \"SPIRITS\".",
+          "entrances":{
+            "east":"Ability Room"
+          },
+          "exits":{
+            "west":"Ability Room"
+          },
+          "features":{
+            
+            "Listener":{
+              "description":"listener",
+              "hidden actions":[
+                "5007"
+              ]
+            }
+          }
+        },
+
+        "Knowledge Room":{
+          "description":"You've come to a large vault. Over the door is written \"KNOWLEDGE\".",
+          "entrances":{
+            "east":"Spirits Room"
+          },
+          "exits":{
+            "west":"Spirits Room"
+          },
+          "features":{
+            
+            "Listener":{
+              "description":"listener",
+              "hidden actions":[
+                "1349"
+              ]
+            }
+          }
+        },
+
+        "Guts Room":{
+          "description":"You've come to a large vault. Over the door is written \"GUTS\".",
+          "entrances":{
+            "east":"Knowledge Room"
+          },
+          "exits":{
+            "west":"Knowledge Room"
+          },
+          "features":{
+            
+            "Listener":{
+              "description":"listener",
+              "hidden actions":[
+                "3295"
+              ]
+            }
+          }
+        },
+
+        "Tactics Room":{
+          "description":"You've come to a large vault. Over the door is written \"TACTICS\".",
+          "entrances":{
+            "east":"Guts Room"
+          },
+          "exits":{
+            "west":"Guts Room"
+          },
+          "features":{
+            
+            "Listener":{
+              "description":"listener",
+              "hidden actions":[
+                "2487"
+              ]
+            }
+          }
+        },
+
+        "Luck Room":{
+          "description":"You've come to a large vault. Over the door is written \"LUCK\".",
+          "entrances":{
+            "east":"Tactics Room"
+          },
+          "exits":{
+            "west":"Tactics Room"
+          },
+          "features":{
+            
+            "Listener":{
+              "description":"listener",
+              "hidden actions":[
+                "2861"
+              ]
+            }
+          }
+        },
+
+        "Brave Room":{
+          "description":"You've come to a large vault. Over the door is written \"BRAVE\".",
+          "entrances":{
+            "east":"Luck Room"
+          },
+          "exits":{
+            "west":"Luck Room"
+          },
+          "features":{
+            
+            "Listener":{
+              "description":"listener",
+              "hidden actions":[
+                "3889"
+              ]
+            }
+          }
+        },
+
+        "Finale":{
+          "description":"The last room. All that's there is a phone.",
+          "entrances":{
+            "east":"Brave Room"
+          },
+          "exits":{
+          },
+          "features":{
+            
+            "Phone":{
+              "description":"It's an old rotary phone. Next to the phone is a note with a phone number on it. Give it a ring.\n\n9255968020",
+              "actions":[
+                "inspect"
+              ]
+            }
+          }
+        },
+
+        "Elevator Hall":{
+          "description":"You enter the elevator hallway.",
+          "entrances":{
+            "east":"Elevator",
+            "west":"Ability Room"
+          },
+          "exits":{
+            "west":"Elevator",
+            "east":"Ability Room"
           }
         }
       }
     }
+    
     
 }
   

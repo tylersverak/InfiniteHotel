@@ -58,7 +58,7 @@ def go_to(player, args):
                 return True
             start_room.on_exit(player, end_room)
             end_room.on_entrance(player, start_room)
-            player.send_text(player.name + ' went ' + args + ' into the room ' + end_room.name)
+            player.send_text(player.name + ' went ' + args)
             return True
         else:
             player.send_text("Hm... can't go that way now. Might have to wait or find another way there, or it might be locked. Now what?")
@@ -67,7 +67,7 @@ def go_to(player, args):
     return False
 
 def speak(player, args):
-    player.send_text(player.name + ' said ' + args + ' in ' + player.room.name)
+    player.send_text(player.name + ' said "' + args + '" in ' + player.room.name)
     actions = player.get_action_objects()
     for value in actions.keys():
         if actions[value].hidden and (args == actions[value].name.lower() or actions[value].name == "elevator"):
@@ -107,11 +107,12 @@ def elevator_move(player, args):
         raise Exception(player.name + " attempting to use elevator without being in it!")
     if args.strip('-').isdigit():
         number = int(args.strip('-'))
-        print(str(hash(sha256(str(number).encode('utf-8')).hexdigest()) % 10 + 2) + " is what you would go to if hash was used")
         if number == player.floor.number:
             player.send_text("You're on that floor, so the elevator didn't move.")
             return True
         floor_list = player.room.floor_list
+        if number >= len(floor_list):
+            number = (number % (len(floor_list) - 2)) + 2
         if number in floor_list.keys():
             player.floor.on_exit(player)
             floor_list[number].on_entrance(player)
@@ -191,7 +192,7 @@ def steer_boat(player, args):
 def orb(player, args):
     orb = player.get_item("Sea Orb")
     if player.floor.name == "Lighthouse Floor" and player.room.name == "Entryway" and orb:
-        player.send_text("You place the orb on the indentation. As it rests there, you look down the telescopic lens into the middle of it. A fog swirls inside the orb. You can faintly make out writing in the orb: \"GUTS=3295\". The orb remains on the apparatus.")
+        player.send_text("You place the orb on the indentation. As it rests there, you look down the telescopic lens into the middle of it. A fog swirls inside the orb. You can faintly make out writing in the orb: \"GUTS:3295\". The orb remains on the apparatus.")
         player.take_item(orb)
         player.room.items.append(orb)
         return True
@@ -341,6 +342,60 @@ def pile(player, self):
     return True
 
 def question_listener(player, args):
-    if args == "what is a cottus echinatus" or args == "what is cottus echinatus":
-        print('s')
+    questions = {'a', 't', 'w', 'i', 'h'}
+    for value in player.room.features:
+        if value.name[:4].lower() != 'door':
+            if value.description[:1].lower() in questions:
+                player.send_text("Correct! You have one less question to answer.")
+                player.room.features.remove(value)
+                if len(player.room.features) <= 2:
+                    player.send_text("That's the last question! Your prize has been given to you.")
+                    knowledge = {"description":"A prize from winning trivia. It reads: \"KNOWLEDGE:1349\".", "actions":[]}
+                    player.make_item(knowledge, "Trivia Prize")
+                return True
+            player.send_text("Correct, but someone already answered that question.")
+            return True
     return True
+
+def vault1(player, args):
+    if args == "6430" and player.room.name == "Ability Room" and player.floor.name == 'Vault':
+        player.floor.rooms['Ability Room'].exits['east'] = 'Spirits Room'
+        player.send_text("The door unlocked!")
+        return True
+
+def vault2(player, args):
+    if args == "5007" and player.room.name == "Spirits Room" and player.floor.name == 'Vault':
+        player.floor.rooms['Spirits Room'].exits['east'] = 'Knowledge Room'
+        player.send_text("The door unlocked!")
+        return True
+
+def vault3(player, args):
+    if args == "1349" and player.room.name == "Knowledge Room" and player.floor.name == 'Vault':
+        player.floor.rooms['Knowledge Room'].exits['east'] = 'Guts Room'
+        player.send_text("The door unlocked!")
+        return True
+
+def vault4(player, args):
+    if args == "3295" and player.room.name == "Guts Room" and player.floor.name == 'Vault':
+        player.floor.rooms['Guts Room'].exits['east'] = 'Tactics Room'
+        player.send_text("The door unlocked!")
+        return True
+
+def vault5(player, args):
+    if args == "2487" and player.room.name == "Tactics Room" and player.floor.name == 'Vault':
+        player.floor.rooms['Tactics Room'].exits['east'] = 'Luck Room'
+        player.send_text("The door unlocked!")
+        return True
+
+def vault6(player, args):
+    if args == "2861" and player.room.name == "Luck Room" and player.floor.name == 'Vault':
+        player.floor.rooms['Luck Room'].exits['east'] = 'Brave Room'
+        player.send_text("The door unlocked!")
+        return True
+
+def vault7(player, args):
+    if args == "3889" and player.room.name == "Brave Room" and player.floor.name == 'Vault':
+        player.floor.rooms['Brave Room'].exits['east'] = 'Finale'
+        player.send_text("The door unlocked!")
+        return True
+
