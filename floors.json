@@ -1224,7 +1224,7 @@
           },
           "features":{
             "Liquid Question":{
-              "description":"This liquid is vital to human life. Ty drinks it all the time. What is it?",
+              "description":"This liquid is vital to human life. People drink it all the time. What is it?",
               "actions":[
                 "inspect"
               ]
@@ -1635,7 +1635,7 @@
           "features":{
             
             "Phone":{
-              "description":"It's an old rotary phone. Next to the phone is a note with a phone number on it. Give it a ring. Be sure to tell him you've made it.\n\n9255968020",
+              "description":"It's an old rotary phone. Next to the phone is a note with a phone number on it. Give it a ring. Be sure to tell him you've made it.[your number here]",
               "actions":[
                 "inspect"
               ]

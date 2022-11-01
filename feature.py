@@ -2,6 +2,7 @@ from action import Action
 
 class Feature():
 
+    # string representation of a Feature
     def __repr__(self):
             return ("Feature called " + self.name + ' that does ' + ("nothing" if self.actions == [] else "some actions"))
 
@@ -14,7 +15,7 @@ class Feature():
         self.custom_actions = []
         hidden_holder = feature_dump.get("hidden actions")
         action_holder = feature_dump.get("actions")
-        custom_holder = feature_dump.get("custom actions")
+        custom_holder = feature_dump.get("custom actions") # custom actions require more info from other Actions
         if action_holder:
             for value in action_holder:
                 self.actions.append(Action(value, self))
@@ -27,12 +28,14 @@ class Feature():
                     description_disabled=custom_holder[value]["description disabled"], hidden=custom_holder[value]["hidden"])
                 self.actions.append(temp)
 
+    # returns all Actions the feature has in a list
     def get_actions(self):
         temp_actions = []
         temp_actions.extend(self.actions)
         temp_actions.extend(self.hidden_actions)
         return temp_actions
 
+    # takes an argument as a string and if string is an Action name, returns True, else return False
     def has_action_by_name(self, action_name):
         for value in self.get_actions():
             if value.name == action_name:

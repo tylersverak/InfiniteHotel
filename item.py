@@ -3,6 +3,7 @@ from action import Action
 
 class Item:
 
+    # string representation of an Item
     def __repr__(self):
             return "item:" + self.name
     
@@ -19,6 +20,7 @@ class Item:
             for value in action_holder:
                 self.actions.append(Action(value, self))
 
+    # returns a list of all Actions the item can perform
     def get_actions(self):
         temp_actions = []
         if self.owner:

@@ -1,7 +1,7 @@
 import types
 import actionfunctions
 
-
+# map of string:function for each Action
 func_dict = {"go":actionfunctions.go_to, "def":actionfunctions.default, "speak":actionfunctions.speak, "examine":actionfunctions.item_default,
              "pickup":actionfunctions.item_pickup, "drop":actionfunctions.item_dropoff,
              "inspect":actionfunctions.inspect, "Laszewo":actionfunctions.laszewo_room, 
@@ -16,10 +16,11 @@ func_dict = {"go":actionfunctions.go_to, "def":actionfunctions.default, "speak":
              "1.8m":actionfunctions.question_listener, "Cow":actionfunctions.question_listener, "6430":actionfunctions.vault1,
              "5007":actionfunctions.vault2, "1349":actionfunctions.vault3, "3295":actionfunctions.vault4, "2487":actionfunctions.vault5,
              "2861":actionfunctions.vault6, "3889":actionfunctions.vault7}
-param_set = set(("go", "speak", "examine", "inspect", "drop", "pickup", "elevator", "play piano notes"))
+param_set = set(("go", "speak", "examine", "inspect", "drop", "pickup", "elevator", "play piano notes")) # set of Actions that require parameters
 
 class Action():
 
+    # string representation of an Action
     def __repr__(self):
         if self.enabled:
             return ("Action " + self.name + " does: " + self.description_enabled)
@@ -40,25 +41,26 @@ class Action():
         self.enabled = enabled
         self.notified = False
 
+    # attempts to perform the Action given by a string argument from Player
     def try_use(self, player, args):
         if not self.enabled:
-            print(self.owner)
-            print( player.floor.get_room("Elevator").floor_list[4].get_room("Main Deck").features[0].actions[0].owner) # if true, then light goes from off to on
             player.send_text(self.description_disabled)
             return True
         if args == "" and self.parameters:
-            print('no parameters found, please try again') # text to player
+            player.send_text('no parameters found, please try again')
             return False
         if args != "" and not self.parameters: # if it doesn't take parameters, ignore them
             return self.use(player, "")
         else:
             return self.use(player, args)
 
+    # given a Player and string parameters, returns the string form of the Action to be displayed to the Player
+    # in the menu
     def get_command_name(self, player, parameters):
         res = "> "
         if self.name == "go":
             res += "GO * "
-            for value in player.room.exits: # assumes room has at least one exit, which it should
+            for value in player.room.exits: # if room has no exits, GO will not be an option
                 res += value + ", "
             return res[:-2]
         elif self.name == "examine" or self.name == "drop":
@@ -88,10 +90,6 @@ class Action():
             res += " ".join(temp_str)
             return res
 
+    # enabled/disable Action
     def flip_enabled(self):
         self.enabled = not self.enabled
-
-'''
-each action's function has to have its own logic for catching argument edgecases,
-and how to handle in the case of too much or bad input
-'''

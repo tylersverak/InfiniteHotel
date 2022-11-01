@@ -10,7 +10,8 @@ from twiliosecret import TWILIO_NUMBER
 
 client = Client(ACCOUNT_SID, AUTH_TOKEN)
 
-def send_twilio_text(text, to_num = "+19255968020"):
+# given a message and a phone number as strings, sends text message
+def send_twilio_text(text, to_num = "your number here"):
     print('debug' + to_num)
     message = client.messages.create(
         to=to_num, 

@@ -8,10 +8,12 @@ LIST_OF_BOOKS = ["\"How to Make Carrot Soup: A Book About Carrot Soup\". Hm, see
 
 # every function returns True on success and False on failure/inability to use
 
+# default action if the action is not assigned another function. this function should only be seen in testing.
 def default(player, args):
     player.send_text(player.name + ' did default action in ' + player.room.name)
     return True
 
+# takes an argument as a string and sends a description of the Item to the Player, if they have it in their inventory
 def item_default(player, args):
     for value in player.items:
         print(value.name.lower())
@@ -21,7 +23,8 @@ def item_default(player, args):
             return True
     player.send_text("Hm... you don't seem to have that item... (check your spelling?)")
     return False
-    
+
+# takes an argument as a string and if an Item exists in the room with that name, the Player picks it up
 def item_pickup(player, args):
     for value in player.room.items:
         if value.name.lower() == args:
@@ -32,6 +35,7 @@ def item_pickup(player, args):
     player.send_text("That item doesn't seem to be here... (check your spelling?)")
     return False
 
+# takes an argument as a string and if an Item exists with that name in the Player's inventory, drops it in the current room
 def item_dropoff(player, args):
     for value in player.items:
         if value.name.lower() == args:
@@ -41,18 +45,19 @@ def item_dropoff(player, args):
             return True
     player.send_text("Hm... you don't seem to have that item... (check your spelling?)")
 
+# takes an argument as a string, and goes that direction from the current Room, if possible
 def go_to(player, args):
     start_room = player.room
     end_room = player.room.exits.get(args)
-    if end_room: # checks if exit from current room is valid
+    if end_room: # checks if exit from current Room is valid
         start_room_name = start_room.name
         if player.floor.number == 1:
-            if start_room.name == "Elevator" and end_room == "Elevator Hall": # special case for first floor, where there is no elevator hall
+            if start_room.name == "Elevator" and end_room == "Elevator Hall": # special case for first Floor, where there is no elevator hall
                 end_room = "Main Hall"
             elif start_room.name =="Main Hall" and end_room == "Elevator":
                 start_room_name = "Elevator Hall"
-        end_room = player.floor.get_room(end_room) # takes name of end room and gets room object
-        if args in end_room.entrances and end_room.entrances[args] == start_room_name: # checks if exit is an entrance of the other room
+        end_room = player.floor.get_room(end_room) # takes name of end Room and gets Room object
+        if args in end_room.entrances and end_room.entrances[args] == start_room_name: # checks if exit is an entrance of the other Room
             if end_room.name == "Elevator" and end_room.player_count() > 0: # checks if the elevator is already in use
                 player.send_text("The elevator seems to be busy. Wait for that person to get off then try again.")
                 return True
@@ -66,6 +71,7 @@ def go_to(player, args):
         player.send_text("Hm... doesn't seem you can go that way... (check your spelling?)")
     return False
 
+# takes an argument as a string and allows the Player to speak it aloud in the room. The speech can sometimes unlock hidden Actions in the Room
 def speak(player, args):
     player.send_text(player.name + ' said "' + args + '" in ' + player.room.name)
     actions = player.get_action_objects()
@@ -77,6 +83,7 @@ def speak(player, args):
             value.send_text(player.name + " said: " + args)
     return True
 
+# takes an argument as a string, if a Feature exists in the Room, tells the Player its description
 def inspect(player, args):
     features = player.room.features
     for value in features:
@@ -89,6 +96,7 @@ def inspect(player, args):
     player.send_text("Hm... whatever you're trying to inspect isn't here... (check your spelling?)")
     return False
 
+# takes an argument as a string, if that argument is the secret word, allows the Player to travel to a secret Room
 def laszewo_room(player, args):
     if args == "laszewo" and player.room.name == "Main Hall" and player.floor.number == 3:
         player.floor.rooms['Main Hall'].exits['east'] = 'Laszewo Room'
@@ -97,11 +105,13 @@ def laszewo_room(player, args):
         return True
     raise Exception(player.name + " tried to open secret L room from somewhere else.")
 
+# sends a link to the Player to listen to some cool tunes
 def listen_to_music(player, args):
     player.send_text('Hope you like it!')
     player.send_text('https://open.spotify.com/artist/6jxGLrn1I14RIeRYodOpLN?si=ttpZiyibTiKzoWO4NYjoKA')
     return True
 
+# takes what the Player said in the elevator and moves the elevator as needed
 def elevator_move(player, args):
     if player.room.name != "Elevator":
         raise Exception(player.name + " attempting to use elevator without being in it!")
@@ -112,24 +122,25 @@ def elevator_move(player, args):
             return True
         floor_list = player.room.floor_list
         if number >= len(floor_list):
-            number = (number % (len(floor_list) - 2)) + 2
+            number = (number % (len(floor_list) - 2)) + 2 # if Player tries to go to Floor that doesn't exist, corrals the value between 2-15
         if number in floor_list.keys():
             player.floor.on_exit(player)
             floor_list[number].on_entrance(player)
             player.send_text("The elevator started moving and took you to another floor.")
         else:
-            player.send_text("[currently no functionality programmed for non existing floors, implementation tbd]")
-            return False
+            raise Exception(player.name + " tried to go to illegal floor!")
         return True
     else:
         player.send_text("Not a number... please try again.")
         return False
 
+# reads a random book off the shelf. There's only two books, for now.
 def random_book(player, args):
     player.send_text(random.choice(LIST_OF_BOOKS))
     return True
 
 # HARDCODED TO ASSUME BOAT IS FLOOR 4!!!
+# turns the lighthouse lamp on/off, when the light is on the boat is able to steer to shore
 def lighthouse_switch(player, args):
     other = player.floor.get_room("Elevator").floor_list[4]
     temp_features = other.get_room("Main Deck").features
@@ -147,6 +158,7 @@ def lighthouse_switch(player, args):
     helm_action.enabled = not helm_action.enabled # flip whether light can be seen
     return True
 
+# given a string, if the string contains characters a-g, plays those notes on the piano
 def play_notes(player, args):
     notes = ""
     print(args.split()[0])
@@ -163,6 +175,7 @@ def play_notes(player, args):
         player.send_text("Played " + notes)
     return True
 
+# pulls the secret basement switch which throws the player into a secret underground Room
 def basement_secret(player, args):
     if player.floor.number != 0 or player.room.name != "Basement":
         raise Exception(player.name + " tried to use hidden basement switch from outside of basement!")
@@ -176,6 +189,7 @@ def basement_secret(player, args):
     player.send_text("As you pull the book, the bookshelves swings out of the wall and you feel the floor moving under your feet. The whole bookshelf rotates 180 degrees, throws you into a secret room opposite from the basement you were in, and swings around again, sealing you inside.")
     return True
 
+# if the lighthouse is on, allows the Player to steer the boat to shore. need to update so it moved every Player in the Room.
 def steer_boat(player, args):
     player.send_text("You notice the lighthouse in the distant, and steer towards it. After a while of sailing, you see the shore, and a dock to pull the boat into. When the boat stops, a small glass orb slides falls out of a compartment and rolls across the boat's deck.")
     player.room.entrances = {}
@@ -189,6 +203,7 @@ def steer_boat(player, args):
     new_floor.get_room("Dock").exits["east"] = "Boat 2"
     return True
 
+# if the Player brings the Sea Orb into the lighthouse, they can gaze into it using equipment in the room. otherwise they see nothing
 def orb(player, args):
     orb = player.get_item("Sea Orb")
     if player.floor.name == "Lighthouse Floor" and player.room.name == "Entryway" and orb:
@@ -199,6 +214,7 @@ def orb(player, args):
     player.send_text("You look into the orb, but the swirling fog obscures your view and you can't see anything useful. You'd need a tool to see inside.")
     return True
 
+# pulls the lever of the slot machine and pays out accordingly
 def slot_machine(player, args):
     luck = random.randint(1, 100)
     machine = player.room.get_feature("Slot Machine")
@@ -231,6 +247,7 @@ def slot_machine(player, args):
         player.send_text("You pull the lever on the machine... It displays: " + losing[choices[0]] + losing[choices[1]] + losing[choices[2]] + ". Rats! Try again.")
     return True
 
+# if the Player is in a Room they can dig, they will dig. otherwise they will not dig
 def dig(player, args):
     if player.room.name == "Dad Pool" and player.floor.name == "Creek Floor":
         if player.room.get_feature("Sword Spot").description != "nothing":
@@ -254,6 +271,7 @@ def dig(player, args):
     player.send_text("There doesn't appear to be a good spot to dig here... try somewhere else.")
     return True
 
+# Player jumps from the top of the waterfall and ends in Pool Room
 def cliff_jump(player, args):
     if player.room.name != "Top":
         raise Exception(player.name + " tried to cliffjump somewhere other than top!")
@@ -265,6 +283,7 @@ def cliff_jump(player, args):
     player.set_timeout(3)
     return True
 
+# skips a rock.
 def skip(player, args):
     res = ""
     skips = 1
@@ -279,10 +298,11 @@ def skip(player, args):
     elif skips < 6:
         res += str(skips) + " skips! Holy cow."
     else:
-        res += str(skips) + " SKIPS? ARE YOU OUT OF YOUR MIND? YOU'RE CRACKED AS SHIT!!! [you should actually tell ty you did this, this is impressive]"
+        res += str(skips) + " SKIPS? ARE YOU OUT OF YOUR MIND? YOU'RE CRACKED AS SHIT!!! [you should actually tell me you did this, this is impressive]"
     player.send_text(res)
     return True
 
+# attempts to grab a crawdad out of the stream
 def crawdad(player, args):
     respond = ("You try to nab it... Ah! Not this time...", "You go for the crawdad... it nips you! Ouch!",
                 "You slowly go for the dad... rats! It barely darted away at the last second.",
@@ -291,6 +311,7 @@ def crawdad(player, args):
     player.send_text(respond[index])
     return True
 
+# swings sword around. if the Player is in the Main Room of the Great Library, it opens the office
 def swing(player, self):
     if player.floor.name == "Great Library" and player.room.name == "Main Room":
         player.floor.get_room("Office").entrances["upstairs"] = "Main Room"
@@ -299,10 +320,12 @@ def swing(player, self):
     player.send_text("WHOOSH! WHOOSH! You swing the sword around. Pretty darn cool.")
     return True
 
+# tosses a die
 def toss(player, self):
     player.send_text("You throw one of the die high into the air, and it comes crashing down on the cement. Not sure where you were aiming with that one.")
     return True
 
+# gives the Player the shovel if no one has retrieved the shovel yet
 def shovel(player, self):
     if player.room.name != "Courtyard" or player.floor.name != "House Floor":
         raise Exception(player.name + " tried to use shovel outside of house floor")
@@ -315,6 +338,7 @@ def shovel(player, self):
         player.send_text("You look through the junk, but there's no shovel here... someone else must've gotten it.")
     return True
 
+# scans the Room, if secret Actions exists there, the crystal glows
 def scan(player, self):
     message = "You gaze into the crystal. You feel its energy scan the environment... "
     for value in player.room.features:
@@ -324,6 +348,7 @@ def scan(player, self):
     player.send_text(message + "but nothing special happens. Try using it somewhere else.")
     return True
 
+# piles another rock on the stack
 def pile(player, self):
     respond = ("You pile rocks on the stack. It starts to look a little bigger! Hopefully that's not just your imagination.",
                 "You throw a few more rocks at the pile. Nothing's changed yet...",
@@ -341,6 +366,7 @@ def pile(player, self):
     player.send_text(respond[index])
     return True
 
+# takes an argument as a string and checks if that string is an answer to one of the trivia questions. unlocks a prize when all 5 are answered
 def question_listener(player, args):
     questions = {'a', 't', 'w', 'i', 'h'}
     for value in player.room.features:
@@ -357,42 +383,49 @@ def question_listener(player, args):
             return True
     return True
 
+# takes an argument as a string and opens vault1 if the string is the PIN
 def vault1(player, args):
     if args == "6430" and player.room.name == "Ability Room" and player.floor.name == 'Vault':
         player.floor.rooms['Ability Room'].exits['east'] = 'Spirits Room'
         player.send_text("The door unlocked!")
         return True
 
+# takes an argument as a string and opens vault2 if the string is the PIN
 def vault2(player, args):
     if args == "5007" and player.room.name == "Spirits Room" and player.floor.name == 'Vault':
         player.floor.rooms['Spirits Room'].exits['east'] = 'Knowledge Room'
         player.send_text("The door unlocked!")
         return True
 
+# takes an argument as a string and opens vault3 if the string is the PIN
 def vault3(player, args):
     if args == "1349" and player.room.name == "Knowledge Room" and player.floor.name == 'Vault':
         player.floor.rooms['Knowledge Room'].exits['east'] = 'Guts Room'
         player.send_text("The door unlocked!")
         return True
 
+# takes an argument as a string and opens vault4 if the string is the PIN
 def vault4(player, args):
     if args == "3295" and player.room.name == "Guts Room" and player.floor.name == 'Vault':
         player.floor.rooms['Guts Room'].exits['east'] = 'Tactics Room'
         player.send_text("The door unlocked!")
         return True
 
+# takes an argument as a string and opens vault5 if the string is the PIN
 def vault5(player, args):
     if args == "2487" and player.room.name == "Tactics Room" and player.floor.name == 'Vault':
         player.floor.rooms['Tactics Room'].exits['east'] = 'Luck Room'
         player.send_text("The door unlocked!")
         return True
 
+# takes an argument as a string and opens vault6 if the string is the PIN
 def vault6(player, args):
     if args == "2861" and player.room.name == "Luck Room" and player.floor.name == 'Vault':
         player.floor.rooms['Luck Room'].exits['east'] = 'Brave Room'
         player.send_text("The door unlocked!")
         return True
 
+# takes an argument as a string and opens vault7 if the string is the PIN
 def vault7(player, args):
     if args == "3889" and player.room.name == "Brave Room" and player.floor.name == 'Vault':
         player.floor.rooms['Brave Room'].exits['east'] = 'Finale'
