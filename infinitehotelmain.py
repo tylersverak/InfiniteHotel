@@ -18,10 +18,12 @@ RUNNNING = False
 STARTING_FLOOR = 1 # starting floor number and room for new players
 STARTING_ROOM = "Lobby"
 LOG_NAME = None # variable for log file output
+DEBUG = False
 
 # takes a string and prints it to the local console and writes it to the currrent log file
 def dprint(text):
-    print("[DEBUG] " + str(text))
+    if DEBUG:
+        print("[DEBUG] " + str(text))
     global LOG_NAME
     log = open(LOG_NAME,"a")
     log.write("[DEBUG] " + str(text) + '\n')
@@ -110,13 +112,17 @@ def give_feedback(player, action_from_player):
         player.send_text('your choice was blank, please try again')
 
 # main function
-def hotelmain():
+def hotelmain(cmd_line_player):
     create_log() # need to create log first to capture all activity
     dprint('Starting...')
     initialize_floors()
     elevator = create_elevator()
     elevator_timer = None # timer used to remove player from elevator if they take too long, as only one player
                           # can be in the elevator at a time
+    dprint('Game Ready!\n')
+
+    if cmd_line_player:
+        add_player("ty","1")
     dprint('Game Ready!\n')
 
     RUNNING = True
@@ -144,6 +150,12 @@ def hotelmain():
                         player.send_info_text()
                         dprint(player.name)
                     received_texts.remove(value)
+            if cmd_line_player:
+                cmd_input=input()
+                if cmd_input.lower()=="q" or cmd_input.lower()=="quit":
+                    return
+                received_texts.append((cmd_input,"1"))
+                print()
     dprint(floor_list)
     dprint("Sucessfully finished!")
 

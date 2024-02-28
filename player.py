@@ -105,6 +105,9 @@ class Player:
 
     # takes a message as a string and texts it to the Player
     def send_text(self, message):
+        if len(self.phone_number)<7:
+            print(message)
+            return
         if len(message) > 1500:
             chunks = textwrap.wrap(message, 1500)
             for value in chunks:

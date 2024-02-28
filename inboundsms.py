@@ -7,6 +7,8 @@ import threading
 # instructions- run web server for receiving texts, then run 'ngrok http 5000' cause webserver default is 5000 and then you
 # gotta put ngrok url in the API
 
+SINGLE_PLAYER = True # should we add one player using the command line?
+
 players = {} # dictionary of existing players in a string:string pair of phone number:name
 
 # webhook for incoming SMS
@@ -38,8 +40,11 @@ def sms_reply():
 
 if __name__ == "__main__":
     print('start')
-    x = threading.Thread(target=hotelmain, args=()) # run the game in a seperate thread
-    x.setDaemon(True)
-    x.start()
-    app.run(host='127.0.0.1', debug=True) # host a local webserver
+    if SINGLE_PLAYER:
+        hotelmain(True)
+    else:
+        x = threading.Thread(target=hotelmain, args=()) # run the game in a seperate thread
+        x.setDaemon(True)
+        x.start()
+        app.run(host='127.0.0.1', debug=True) # host a local webserver
     print('end')

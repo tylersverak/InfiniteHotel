@@ -191,7 +191,7 @@ def basement_secret(player, args):
 
 # if the lighthouse is on, allows the Player to steer the boat to shore. need to update so it moved every Player in the Room.
 def steer_boat(player, args):
-    player.send_text("You notice the lighthouse in the distant, and steer towards it. After a while of sailing, you see the shore, and a dock to pull the boat into. When the boat stops, a small glass orb slides falls out of a compartment and rolls across the boat's deck.")
+    player.send_text("You notice the lighthouse in the distance, and steer towards it. After a while of sailing, you see the shore, and a dock to pull the boat into. When the boat stops, a small glass orb slides falls out of a compartment and rolls across the boat's deck.")
     player.room.entrances = {}
     print(player.room)
     print(player.room.entrances)
@@ -207,11 +207,11 @@ def steer_boat(player, args):
 def orb(player, args):
     orb = player.get_item("Sea Orb")
     if player.floor.name == "Lighthouse Floor" and player.room.name == "Entryway" and orb:
-        player.send_text("You place the orb on the indentation. As it rests there, you look down the telescopic lens into the middle of it. A fog swirls inside the orb. You can faintly make out writing in the orb: \"GUTS:3295\". The orb remains on the apparatus.")
+        player.send_text("You place the orb on the indentation. As it rests there, you look down the telescopic lens into the middle of it. You can faintly make out writing in the orb: \"GUTS:3295\". The orb remains on the apparatus.")
         player.take_item(orb)
         player.room.items.append(orb)
         return True
-    player.send_text("You look into the orb, but the swirling fog obscures your view and you can't see anything useful. You'd need a tool to see inside.")
+    player.send_text("You look into the orb, but whatever is written there is too small to make out. You'd need a tool to see better.")
     return True
 
 # pulls the lever of the slot machine and pays out accordingly

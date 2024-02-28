@@ -496,7 +496,7 @@
           },
           "features":{
             "Journal":{
-              "description":"The journal reads: \"They've been gone for two weeks now. At this point, the will have been without supplies for 8 days. My only hope is the current has pushed them to southern shores, and they must travel back by land. More likely, whatever they were after, they perished trying to find it. I hope the lamp can lead them home.\"",
+              "description":"The journal reads: \"They've been gone for two weeks now. At this point, they will have been without supplies for 8 days. My only hope is the current has pushed them to southern shores, and they must travel back by land. More likely, whatever they were after, they perished trying to find it. I hope the lamp can lead them home.\"",
               "actions":[
                   "inspect"
               ]
